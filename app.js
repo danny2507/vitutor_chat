@@ -208,14 +208,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // ---------------------------------------------------------
     let currentTask = VITUTOR_TASKS[0];
     let chatHistoryMap = {}; // taskId -> list of messages
-    let activeModel = "vitutor-qwen3-8b-full-sft-dpo-grpo";
+    let activeModel = "URAx-TaiDuc";
     let isPromptEditorExpanded = false;
     let isGenerating = false;
     let currentReader = null;
 
     // Load initial settings
     const settings = {
-        endpoint: localStorage.getItem("vitutor_endpoint") || "https://ws.gvlab.org/fablab/ura/llama/haystack/",
+        endpoint: localStorage.getItem("vitutor_endpoint") || "http://59.153.246.12:8000/v1/chat/completions",
         apiKey: localStorage.getItem("vitutor_apikey") || "",
         temperature: parseFloat(localStorage.getItem("vitutor_temp") || "0.6")
     };
