@@ -8,8 +8,12 @@ import os
 import sys
 import shutil
 
-PORT = 8080
+PORT = 8000
 DIRECTORY = os.path.dirname(os.path.abspath(__file__))
+
+class ThreadingHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
+    daemon_threads = True
+    allow_reuse_address = True
 
 class ViTutorProxyHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
@@ -134,13 +138,12 @@ def main():
             shutil.copy(src_logo_path, dest_logo_path)
             print(f"Copied Bach Khoa logo to: {dest_logo_path}")
 
-    # Set up server
-    # Allow port reuse to avoid 'Address already in use' errors during rapid restarts
-    socketserver.TCPServer.allow_reuse_address = True
-    with socketserver.TCPServer(("", PORT), ViTutorProxyHandler) as httpd:
+    # Set up a threaded server so one long streaming chat does not block others.
+    with ThreadingHTTPServer(("", PORT), ViTutorProxyHandler) as httpd:
         print("="*60)
         print(f" ViTutor Chat Server running locally at: http://localhost:{PORT}/")
         print(f" Default Model Endpoint: https://ws.gvlab.org/fablab/ura/llama/haystack/")
+        print(" Concurrent requests: enabled")
         print(" Press Ctrl+C to stop.")
         print("="*60)
         try:
