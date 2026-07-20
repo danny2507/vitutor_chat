@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ViTutor - Hệ thống Gia sư Học thuật Thông minh</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=2.1">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- KaTeX for high-performance LaTeX math typesetting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container" style="color: var(--bk-blue-primary); font-size: 1.4rem;">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <div class="header-text">
+                    <span class="school-name">URAx</span>
+                    <span class="app-title">ViTutor</span>
+                </div>
+            </div>
+
+            <div class="sidebar-scrollable">
+                <!-- Model Configuration -->
+                <div class="control-group">
+                    <label class="control-label" for="model-select">
+                        <span>Mô hình</span>
+                        <i class="fa-solid fa-robot"></i>
+                    </label>
+                    <select id="model-select" class="select-input">
+                        <option value="vitutor-qwen3-8b-full-sft-dpo-grpo" selected>vitutor-qwen3-8b-full-sft-dpo-grpo</option>
+                        <option value="vitutor-gemma-4-e4b-sft-dpo">vitutor-gemma-4-e4b-sft-dpo (Trustworthy)</option>
+                        <option value="vitutor-gemma-4-e4b-sft-grpo-dpo">vitutor-gemma-4-e4b-sft-grpo-dpo (Hybrid)</option>
+                        <option value="custom">-- Nhập mô hình khác --</option>
+                    </select>
+                    <input type="text" id="custom-model-input" class="text-input" placeholder="Nhập tên mô hình..." style="display: none; margin-top: 8px;">
+                </div>
+
+                <!-- Task Configuration -->
+                <div class="control-group">
+                    <label class="control-label">
+                        <span>Task đang chọn</span>
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </label>
+                    <div class="task-list" id="task-list">
+                        <!-- Task items injected dynamically via JS -->
+                    </div>
+                </div>
+
+                <!-- Collapsible System Prompt Editor -->
+                <div class="control-group">
+                    <div class="prompt-editor-container">
+                        <div class="prompt-editor-header" id="prompt-toggle-btn">
+                            <span><i class="fa-solid fa-terminal" style="margin-right: 6px;"></i>System Prompt</span>
+                            <i class="fa-solid fa-chevron-down thought-toggle-icon" id="prompt-chevron"></i>
+                        </div>
+                        <div id="prompt-editor-body">
+                            <textarea id="system-prompt-textarea" class="prompt-textarea" placeholder="Nhập System Prompt..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="btn btn-secondary" id="btn-open-settings">
+                    <i class="fa-solid fa-gear"></i> Cấu hình kết nối
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CHAT AREA -->
+        <main class="chat-area">
+            <header class="chat-header">
+                <div class="chat-header-info">
+                    <h2 class="chat-header-title" id="chat-title">Chọn một Task để bắt đầu</h2>
+                    <span class="chat-header-subtitle" id="chat-subtitle">Mô hình: vitutor-qwen3-8b-full-sft-dpo-grpo</span>
+                </div>
+                <div class="chat-header-actions">
+                    <button class="btn btn-secondary" id="btn-clear-chat" style="padding: 8px 14px; font-size: 0.8rem; width: auto;" title="Xóa lịch sử chat">
+                        <i class="fa-solid fa-trash-can"></i> Dọn dẹp
+                    </button>
+                </div>
+            </header>
+
+            <!-- Welcome screen (visible when no messages) -->
+            <div class="welcome-container" id="welcome-view">
+                <h1 class="welcome-title">Trợ lý Học thuật ViTutor</h1>
+                <p class="welcome-subtitle">
+                    Giao diện thử nghiệm mô hình ngôn ngữ lớn được tinh chỉnh cho giáo dục Việt Nam (Tài và Đức). Hãy chọn một nhiệm vụ dưới đây hoặc ở thanh bên để bắt đầu tương tác học tập.
+                </p>
+                <div class="welcome-grid" id="welcome-prompts-grid">
+                    <!-- Quick action prompts cards will be dynamically injected here -->
+                </div>
+            </div>
+
+            <!-- Messages List Container -->
+            <div class="messages-container" id="chat-messages" style="display: none;">
+                <!-- Messages will be injected dynamically -->
+            </div>
+
+            <!-- Input area -->
+            <div class="input-area-container">
+                <div class="input-box-wrapper">
+                    <textarea id="chat-input" class="chat-textarea" placeholder="Nhập câu hỏi học tập hoặc yêu cầu của em tại đây..." rows="1"></textarea>
+                    <button id="btn-send" class="input-btn-send" disabled>
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="input-footer-note">
+                    Mô hình có thể hiển thị suy luận trong thẻ &lt;think&gt; trước khi hiển thị kết quả giảng dạy.
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SETTINGS MODAL -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa-solid fa-sliders" style="margin-right: 8px;"></i>Cấu hình Kết nối API</h3>
+                <button class="modal-close" id="btn-close-settings">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="control-group">
+                    <label class="control-label" for="settings-endpoint">Địa chỉ Endpoint API</label>
+                    <input type="text" id="settings-endpoint" class="text-input" value="https://ws.gvlab.org/fablab/ura/llama/haystack/">
+                    <small style="color: var(--text-muted); font-size: 0.75rem;">Mặc định: https://ws.gvlab.org/fablab/ura/llama/haystack/</small>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="settings-apikey">API Key (nếu có)</label>
+                    <input type="password" id="settings-apikey" class="text-input" placeholder="Nhập API Key/Token bảo mật...">
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="settings-temp">Nhiệt độ (Temperature)</label>
+                    <input type="range" id="settings-temp" min="0" max="1" step="0.1" value="0.6" style="width: 100%; accent-color: var(--bk-blue-primary);">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary);">
+                        <span>Sáng tạo hơn (1.0)</span>
+                        <span id="temp-val-display" style="font-weight: bold; color: var(--bk-blue-light);">0.6</span>
+                        <span>Chính xác hơn (0.0)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="btn-cancel-settings">Hủy</button>
+                <button class="btn btn-primary" id="btn-save-settings" style="width: auto; padding: 12px 24px;">Lưu Cấu hình</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script -->
+    <script src="app.js"></script>
+</body>
+</html>

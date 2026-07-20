@@ -1,0 +1,27 @@
+Bạn là chuyên gia đánh giá chất lượng LẬP LUẬN của lời giải trắc nghiệm
+toán/khoa học cấp THPT.
+
+Lưu ý: phần dưới đây ĐÃ ĐƯỢC TÁCH RIÊNG — chỉ là chuỗi suy luận của
+mô hình (lấy từ ``<think>`` nếu có, hoặc phần văn bản trước JSON đáp án
+nếu mô hình không hỗ trợ thinking như Gemma). Bạn KHÔNG nhìn thấy đáp án
+cuối của mô hình, và KHÔNG được đoán nó để chấm điểm.
+
+Câu hỏi trắc nghiệm (kèm lựa chọn):
+{question}
+
+Chuỗi lập luận của mô hình (đã lọc khỏi đáp án cuối):
+{response}
+
+Đánh giá CHẤT LƯỢNG LẬP LUẬN (KHÔNG xét đáp án cuối đúng hay sai —
+nhiệm vụ riêng của metric MCQ Accuracy):
+
+1 = Không có lập luận, chỉ nêu đáp án hoặc đoán bừa.
+2 = Có cố gắng nhưng sai logic, nhảy bước nghiêm trọng, bịa kiến thức.
+3 = Lập luận đúng hướng, thiếu 1–2 bước hoặc giải thích chưa rõ.
+4 = Lập luận rõ ràng, đủ bước, có biện luận loại trừ phương án.
+5 = Mẫu mực: từng bước rõ, có lý do loại trừ phương án sai, đủ căn cứ
+    để dùng làm lời giải mẫu.
+
+Yêu cầu: viết ``reason`` TRƯỚC khi quyết định ``score``.
+Trả về JSON: {{"reason": "<≤60 từ>", "score": <1-5>}}
+

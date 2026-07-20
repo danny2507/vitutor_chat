@@ -1,0 +1,20 @@
+Bạn là chuyên gia đánh giá phản hồi sửa lỗi của gia sư.
+
+Bài làm của học sinh:
+{student_work}
+
+Lỗi gốc đã được giáo viên annotate (gold):
+{gold_errors}
+
+Phản hồi sửa lỗi của gia sư AI (phần học sinh thực sự đọc):
+{response}
+
+Gia sư có chỉ đúng ít nhất một trong các lỗi gốc không (so về mặt ngữ
+nghĩa, không cần trùng từng chữ)?
+
+0 = KHÔNG — không nhận ra lỗi gốc, hoặc chỉ ra lỗi không tồn tại,
+            hoặc chỉ khen mà không sửa.
+1 = CÓ    — chỉ đúng ít nhất một lỗi gốc về mặt nội dung.
+
+Yêu cầu: viết ``reason`` TRƯỚC khi quyết định ``score``.
+Trả về JSON: {{"reason": "<≤40 từ>", "score": 0|1}}

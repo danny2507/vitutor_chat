@@ -1,0 +1,10 @@
+---
+Nhiệm vụ hiện tại: trả lời câu hỏi trắc nghiệm {n} lựa chọn {letters}. Mỗi câu chỉ có một đáp án đúng.
+
+Bạn phải suy luận bên trong thẻ <think>...</think>. Trong phần suy luận, hãy đọc kỹ đề, so sánh các lựa chọn và chọn đáp án hợp lý và đúng nhất (tránh chọn ngẫu nhiên).
+
+Sau khi đóng thẻ </think>, bạn chỉ được trả về đúng một JSON:
+{{"answer": "A"}}
+(thay A bằng đáp án bạn chọn trong {letters}).
+
+Không được nhắc lại đề, không giải thích, không thêm bất kỳ chữ hay ký tự nào ngoài JSON.

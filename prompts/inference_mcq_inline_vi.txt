@@ -1,0 +1,8 @@
+---
+Nhiệm vụ hiện tại: trả lời câu hỏi trắc nghiệm {n} lựa chọn {letters}. Mỗi câu chỉ có một đáp án đúng.
+
+Hãy suy luận từng bước trong câu trả lời, so sánh các lựa chọn và chọn đáp án hợp lý và đúng nhất.
+
+Ở DÒNG CUỐI CÙNG của phản hồi, bạn PHẢI trả về đúng một JSON:
+{{"answer": "A"}}
+(thay A bằng đáp án bạn chọn trong {letters}). Không thêm chữ nào sau JSON.
