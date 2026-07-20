@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const VITUTOR_TASKS = [
         {
             id: "general_chat",
-            title: "Trò chuyện Tự do (General Chat)",
+            title: "Trò chuyện Tự do",
             icon: "fa-comments",
             description: "Trò chuyện tự do và phản hồi theo tinh thần sư phạm, ngắn gọn, hữu ích.",
             promptFile: "inference_role_fallback_user_vi.txt",
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "general_tutor",
-            title: "Trợ lý Sư phạm Học thuật (Tài & Đức)",
+            title: "Trợ lý Sư phạm Học thuật",
             icon: "fa-graduation-cap",
             description: "Hỗ trợ học tập, giải thích kiến thức, gợi ý tự học với văn phong sư phạm chuẩn mực.",
             promptFile: "inference_tutor_preamble_vi.txt",
@@ -431,7 +431,7 @@ document.addEventListener("DOMContentLoaded", () => {
             systemPromptTextarea.value = "Đang tải prompt từ file...";
             
             // Fetch main prompt file
-            fetch(`/prompts/${task.promptFile}`)
+            fetch(`./prompts/${task.promptFile}`)
                 .then(res => {
                     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                     return res.text();
@@ -443,7 +443,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     
                     if (task.prependPreamble) {
                         // We need to fetch and prepend the generic tutor preamble
-                        return fetch('/prompts/inference_tutor_preamble_vi.txt')
+                        return fetch('./prompts/inference_tutor_preamble_vi.txt')
                             .then(preambleRes => {
                                 if (!preambleRes.ok) throw new Error(`HTTP error! status: ${preambleRes.status}`);
                                 return preambleRes.text();
@@ -707,7 +707,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const signal = controller.signal;
             currentReader = controller;
 
-            const response = await fetch('/api/chat', {
+            const response = await fetch('./api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),
