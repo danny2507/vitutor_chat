@@ -999,7 +999,8 @@ body {
     }
 
     .welcome-container {
-        padding: 16px;
+        padding: 24px 16px 16px;
+        justify-content: flex-start;
     }
 
     .welcome-title {
