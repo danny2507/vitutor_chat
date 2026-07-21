@@ -518,7 +518,6 @@ Bài làm của học sinh: 'Để pt có 2 nghiệm pb thì Δ' > 0 <=> (m-1)²
             const card = document.createElement("div");
             card.className = "welcome-card";
             card.innerHTML = `
-                <div class="welcome-card-icon"><i class="fa-regular fa-comment-dots"></i></div>
                 <div class="welcome-card-title">${sug.title}</div>
                 <div class="welcome-card-desc">"${sug.text}"</div>
             `;
