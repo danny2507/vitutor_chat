@@ -983,11 +983,26 @@ body {
         padding: 0 16px;
     }
 
+    .chat-header-info {
+        overflow: hidden;
+    }
+
     .chat-header-title {
         font-size: 1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .chat-header-subtitle {
+        display: none; /* Hide long subtitle on mobile to save space */
     }
 
     .welcome-container {
-        padding: 24px 16px;
+        padding: 16px;
+    }
+
+    .welcome-title {
+        font-size: 1.5rem;
     }
 }
