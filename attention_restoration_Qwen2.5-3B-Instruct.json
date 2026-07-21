@@ -1,0 +1,4526 @@
+{
+  "experiment": "clean_to_corrupt_constraint_attention_restoration",
+  "interpretation_scope": "Oracle mechanistic mediation test, not a deployable intervention: clean-run constraint attention probabilities are used to calibrate the corrupt run. Only the selected rule-token probabilities are restored; non-target corrupt attention retains its relative shape.",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "config_source": "auto-detected experiment_configs.json",
+  "experiment_config": {
+    "default_layer_sets": {
+      "28": "14-27",
+      "36": "23-35"
+    },
+    "fallback_late_fraction": 0.6,
+    "eligibility": {
+      "clean_margin_min_exclusive": 0.0,
+      "clean_corrupt_gap_min": 0.5
+    },
+    "probability_epsilon": 1e-08,
+    "calibration_steps": 4,
+    "calibration_damping": 1.0,
+    "max_abs_logit_delta": 20.0,
+    "identity_margin_tolerance": 0.01,
+    "restoration_pattern_mae_tolerance": 0.002,
+    "sign_flip_draws": 20000,
+    "required_positive_scenarios": 2
+  },
+  "n_layers": 36,
+  "intervention_layers": [
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35
+  ],
+  "layer_spec": "23-35",
+  "scenarios": [
+    "js",
+    "python",
+    "sql"
+  ],
+  "n_samples_per_scenario": null,
+  "eligibility_rule": "clean_margin > 0.0 and clean_margin - corrupt_margin >= 0.5",
+  "intervention_scope": "final forced-decision query row only; clean per-layer, per-head, per-rule-token probability pattern restored in corrupt context",
+  "controls": {
+    "rag_violation_restore": "same clean probability pattern transplanted to an equal-length decision-relevant violating RAG span",
+    "rag_random_restore": "same clean probability pattern transplanted to equal-length random RAG positions",
+    "rag_recent_restore": "same clean probability pattern transplanted to equal-length most-recent RAG positions",
+    "constraint_identity": "corrupt constraint pattern restored to itself; numerical identity control"
+  },
+  "grand_summary": {
+    "all_trials": {
+      "n": 45,
+      "clean": {
+        "n": 45,
+        "flip_rate": 0.9333333333333333,
+        "mean_margin": 7.245833333333334
+      },
+      "corrupt": {
+        "n": 45,
+        "flip_rate": 0.5555555555555556,
+        "mean_margin": -0.2125
+      },
+      "conditions": {
+        "constraint_restore": {
+          "n": 45,
+          "flip_rate": 0.8222222222222222,
+          "mean_margin": 2.165277777777778
+        },
+        "rag_violation_restore": {
+          "n": 45,
+          "flip_rate": 0.6444444444444445,
+          "mean_margin": 0.6541666666666667
+        },
+        "rag_random_restore": {
+          "n": 45,
+          "flip_rate": 0.4444444444444444,
+          "mean_margin": -0.8805555555555555
+        },
+        "rag_recent_restore": {
+          "n": 45,
+          "flip_rate": 0.4444444444444444,
+          "mean_margin": -0.7416666666666667
+        },
+        "constraint_identity": {
+          "n": 45,
+          "flip_rate": 0.5555555555555556,
+          "mean_margin": -0.2125
+        }
+      },
+      "attention": {
+        "clean_rule_attention_mass": 0.060220664601900405,
+        "corrupt_rule_attention_mass": 0.015529004809581958,
+        "natural_rule_attention_drop": 0.044691659792318435,
+        "clean_corrupt_rule_pattern_mae": 0.002177085640564616
+      },
+      "intervention_fidelity": {
+        "constraint_restore": {
+          "mean_pattern_mae": 0.0005883475199203904,
+          "max_pattern_mae": 0.001340091615789928,
+          "convergence_rate": 1.0
+        },
+        "rag_violation_restore": {
+          "mean_pattern_mae": 0.0007834136132361083,
+          "max_pattern_mae": 0.001437894129104769,
+          "convergence_rate": 1.0
+        },
+        "rag_random_restore": {
+          "mean_pattern_mae": 0.0008508793084962607,
+          "max_pattern_mae": 0.001990349658836539,
+          "convergence_rate": 1.0
+        },
+        "rag_recent_restore": {
+          "mean_pattern_mae": 0.0009788222441061525,
+          "max_pattern_mae": 0.0015318322265766955,
+          "convergence_rate": 1.0
+        },
+        "constraint_identity": {
+          "mean_pattern_mae": 0.0,
+          "max_pattern_mae": 0.0,
+          "convergence_rate": 1.0
+        }
+      }
+    },
+    "override_eligible": {
+      "n": 42,
+      "clean": {
+        "n": 42,
+        "flip_rate": 1.0,
+        "mean_margin": 7.894345238095238
+      },
+      "corrupt": {
+        "n": 42,
+        "flip_rate": 0.5952380952380952,
+        "mean_margin": 0.3645833333333333
+      },
+      "conditions": {
+        "constraint_restore": {
+          "n": 42,
+          "flip_rate": 0.8809523809523809,
+          "mean_margin": 2.8735119047619047
+        },
+        "rag_violation_restore": {
+          "n": 42,
+          "flip_rate": 0.6904761904761905,
+          "mean_margin": 1.0669642857142858
+        },
+        "rag_random_restore": {
+          "n": 42,
+          "flip_rate": 0.47619047619047616,
+          "mean_margin": -0.3125
+        },
+        "rag_recent_restore": {
+          "n": 42,
+          "flip_rate": 0.47619047619047616,
+          "mean_margin": -0.19642857142857142
+        },
+        "constraint_identity": {
+          "n": 42,
+          "flip_rate": 0.5952380952380952,
+          "mean_margin": 0.3645833333333333
+        }
+      },
+      "attention": {
+        "clean_rule_attention_mass": 0.0626037537168043,
+        "corrupt_rule_attention_mass": 0.0157413494166826,
+        "natural_rule_attention_drop": 0.04686240430012168,
+        "clean_corrupt_rule_pattern_mae": 0.0022601897483086044
+      },
+      "intervention_fidelity": {
+        "constraint_restore": {
+          "mean_pattern_mae": 0.0006170327406666747,
+          "max_pattern_mae": 0.001340091615789928,
+          "convergence_rate": 1.0
+        },
+        "rag_violation_restore": {
+          "mean_pattern_mae": 0.0007834404655363619,
+          "max_pattern_mae": 0.001437894129104769,
+          "convergence_rate": 1.0
+        },
+        "rag_random_restore": {
+          "mean_pattern_mae": 0.0008940243835728896,
+          "max_pattern_mae": 0.001990349658836539,
+          "convergence_rate": 1.0
+        },
+        "rag_recent_restore": {
+          "mean_pattern_mae": 0.0010254181670311632,
+          "max_pattern_mae": 0.0015318322265766955,
+          "convergence_rate": 1.0
+        },
+        "constraint_identity": {
+          "mean_pattern_mae": 0.0,
+          "max_pattern_mae": 0.0,
+          "convergence_rate": 1.0
+        }
+      }
+    }
+  },
+  "main_hypothesis_gate": {
+    "passed": false,
+    "n_eligible": 42,
+    "baseline_flip_rate": 0.5952380952380952,
+    "constraint_restore_flip_rate": 0.8809523809523809,
+    "mean_natural_rule_attention_drop": 0.04686240430012168,
+    "constraint_restore_lift": 2.5089285714285716,
+    "rag_violation_restore_lift": 0.7023809523809523,
+    "rag_random_restore_lift": -0.6770833333333334,
+    "rag_recent_restore_lift": -0.5610119047619048,
+    "specificity_over_best_position_control": 2.7529761904761907,
+    "specificity_one_sided_p": 4.999750012499375e-05,
+    "sign_flip_draws": 20000,
+    "mean_clean_gap_recovered": 0.3397517092102901,
+    "mean_identity_margin_drift": 0.0,
+    "max_abs_identity_margin_drift": 0.0,
+    "mean_restoration_pattern_mae": 0.0008299789392017723,
+    "max_restoration_pattern_mae": 0.001990349658836539,
+    "positive_scenarios": 3,
+    "required_positive_scenarios": 2,
+    "per_scenario": {
+      "js": {
+        "n_eligible": 12,
+        "mean_natural_rule_attention_drop": 0.028140561181293707,
+        "constraint_restore_lift": 2.1666666666666665,
+        "best_position_control_lift": 0.3229166666666667
+      },
+      "python": {
+        "n_eligible": 15,
+        "mean_natural_rule_attention_drop": 0.04568477394417502,
+        "constraint_restore_lift": 2.3125,
+        "best_position_control_lift": -0.19166666666666668
+      },
+      "sql": {
+        "n_eligible": 15,
+        "mean_natural_rule_attention_drop": 0.06301750915113073,
+        "constraint_restore_lift": 2.9791666666666665,
+        "best_position_control_lift": -0.75
+      }
+    },
+    "gate_definition": "clean rule attention exceeds corrupt rule attention; restoring the clean rule pattern raises the committed margin and beats probability-matched random/recent RAG controls; transplanting that pattern to violating RAG lowers the margin; paired specificity p < .05; direction holds in the configured number of scenarios; identity drift and calibration error stay within configured numerical tolerances"
+  },
+  "per_scenario": [
+    {
+      "scenario": "js",
+      "label": "JavaScript / Frontend",
+      "scenario_file": "scenario_multi.jsonl",
+      "primary_constraint_id": "C1_http",
+      "constraint": {
+        "id": "C1_http",
+        "committed": "axios",
+        "violating": "fetch",
+        "forced_prefixes": [
+          "\n\n```javascript\nconst response = ",
+          "\n\n```javascript\nconst res = await ",
+          "\n\n```javascript\nreturn "
+        ]
+      },
+      "trial_grid": {
+        "configured_tasks": 5,
+        "configured_prefixes": 3,
+        "selected_pairs": 15
+      },
+      "summaries": {
+        "all_trials": {
+          "n": 15,
+          "clean": {
+            "n": 15,
+            "flip_rate": 0.8,
+            "mean_margin": 2.375
+          },
+          "corrupt": {
+            "n": 15,
+            "flip_rate": 0.0,
+            "mean_margin": -4.091666666666667
+          },
+          "conditions": {
+            "constraint_restore": {
+              "n": 15,
+              "flip_rate": 0.4666666666666667,
+              "mean_margin": -2.25
+            },
+            "rag_violation_restore": {
+              "n": 15,
+              "flip_rate": 0.0,
+              "mean_margin": -3.125
+            },
+            "rag_random_restore": {
+              "n": 15,
+              "flip_rate": 0.0,
+              "mean_margin": -4.425
+            },
+            "rag_recent_restore": {
+              "n": 15,
+              "flip_rate": 0.0,
+              "mean_margin": -3.9583333333333335
+            },
+            "constraint_identity": {
+              "n": 15,
+              "flip_rate": 0.0,
+              "mean_margin": -4.091666666666667
+            }
+          },
+          "attention": {
+            "clean_rule_attention_mass": 0.04016649623234303,
+            "corrupt_rule_attention_mass": 0.01479379995069347,
+            "natural_rule_attention_drop": 0.02537269628164955,
+            "clean_corrupt_rule_pattern_mae": 0.001644380183857627
+          },
+          "intervention_fidelity": {
+            "constraint_restore": {
+              "mean_pattern_mae": 0.0004548918552642042,
+              "max_pattern_mae": 0.0011221131725715867,
+              "convergence_rate": 1.0
+            },
+            "rag_violation_restore": {
+              "mean_pattern_mae": 0.0007308226634123481,
+              "max_pattern_mae": 0.0011404405556207236,
+              "convergence_rate": 1.0
+            },
+            "rag_random_restore": {
+              "mean_pattern_mae": 0.0006943453768261139,
+              "max_pattern_mae": 0.0015433521323127653,
+              "convergence_rate": 1.0
+            },
+            "rag_recent_restore": {
+              "mean_pattern_mae": 0.0007887650006803315,
+              "max_pattern_mae": 0.0013756442958065935,
+              "convergence_rate": 1.0
+            },
+            "constraint_identity": {
+              "mean_pattern_mae": 0.0,
+              "max_pattern_mae": 0.0,
+              "convergence_rate": 1.0
+            }
+          }
+        },
+        "override_eligible": {
+          "n": 12,
+          "clean": {
+            "n": 12,
+            "flip_rate": 1.0,
+            "mean_margin": 3.4270833333333335
+          },
+          "corrupt": {
+            "n": 12,
+            "flip_rate": 0.0,
+            "mean_margin": -3.0416666666666665
+          },
+          "conditions": {
+            "constraint_restore": {
+              "n": 12,
+              "flip_rate": 0.5833333333333334,
+              "mean_margin": -0.875
+            },
+            "rag_violation_restore": {
+              "n": 12,
+              "flip_rate": 0.0,
+              "mean_margin": -2.625
+            },
+            "rag_random_restore": {
+              "n": 12,
+              "flip_rate": 0.0,
+              "mean_margin": -3.3229166666666665
+            },
+            "rag_recent_restore": {
+              "n": 12,
+              "flip_rate": 0.0,
+              "mean_margin": -2.8541666666666665
+            },
+            "constraint_identity": {
+              "n": 12,
+              "flip_rate": 0.0,
+              "mean_margin": -3.0416666666666665
+            }
+          },
+          "attention": {
+            "clean_rule_attention_mass": 0.04349376604211732,
+            "corrupt_rule_attention_mass": 0.01535320486082361,
+            "natural_rule_attention_drop": 0.028140561181293707,
+            "clean_corrupt_rule_pattern_mae": 0.0018020681967848362
+          },
+          "intervention_fidelity": {
+            "constraint_restore": {
+              "mean_pattern_mae": 0.0005219262117121523,
+              "max_pattern_mae": 0.0011221131725715867,
+              "convergence_rate": 1.0
+            },
+            "rag_violation_restore": {
+              "mean_pattern_mae": 0.0007177689090072958,
+              "max_pattern_mae": 0.0011404405556207236,
+              "convergence_rate": 1.0
+            },
+            "rag_random_restore": {
+              "mean_pattern_mae": 0.0008062196566767783,
+              "max_pattern_mae": 0.0015433521323127653,
+              "convergence_rate": 1.0
+            },
+            "rag_recent_restore": {
+              "mean_pattern_mae": 0.0009043364200614143,
+              "max_pattern_mae": 0.0013756442958065935,
+              "convergence_rate": 1.0
+            },
+            "constraint_identity": {
+              "mean_pattern_mae": 0.0,
+              "max_pattern_mae": 0.0,
+              "convergence_rate": 1.0
+            }
+          }
+        }
+      },
+      "trials": [
+        {
+          "index": 0,
+          "task": "Write a getSubscription(userId) function that fetches /v2/users/{userId}/subscription and returns JSON. Match the style of other functions in the file.",
+          "forced_prefix": "\n\n```javascript\nconst res = await",
+          "committed_token_id": 12974,
+          "violating_token_id": 7807,
+          "committed_token_form": " axios",
+          "violating_token_form": " fetch",
+          "committed_token_sequence": [
+            12974
+          ],
+          "violating_token_sequence": [
+            7807
+          ],
+          "clean_sequence_tokens": 317,
+          "corrupt_sequence_tokens": 1844,
+          "rule_token_count": 18,
+          "violating_occurrences": 13,
+          "clean_margin": 1.875,
+          "corrupt_margin": -2.5,
+          "clean_rule_attention_mass": 0.026076450800666444,
+          "corrupt_rule_attention_mass": 0.020484031536258183,
+          "natural_rule_attention_drop": 0.00559241926440826,
+          "clean_corrupt_rule_pattern_mae": 0.0012063087465671392,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": -1.375,
+              "desired_attention_mass": 0.026076450800666444,
+              "achieved_attention_mass": 0.032654689624905586,
+              "pattern_mae": 0.00041164501817547716,
+              "mass_mae": 0.007158013456948818,
+              "mean_abs_logit_delta": 1.361943006515503,
+              "max_abs_logit_delta": 8.282517433166504,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": -0.125,
+              "desired_attention_mass": 0.026076450800666444,
+              "achieved_attention_mass": 0.024170293795088164,
+              "pattern_mae": 0.0003717587151186308,
+              "mass_mae": 0.005748933961373181,
+              "mean_abs_logit_delta": 2.4509682655334473,
+              "max_abs_logit_delta": 12.493775367736816,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -2.625,
+              "desired_attention_mass": 0.026076450800666444,
+              "achieved_attention_mass": 0.02835511491419031,
+              "pattern_mae": 0.0003308932239003927,
+              "mass_mae": 0.005093831819697068,
+              "mean_abs_logit_delta": 3.609800338745117,
+              "max_abs_logit_delta": 15.225391387939453,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -2.375,
+              "desired_attention_mass": 0.026076450800666444,
+              "achieved_attention_mass": 0.02829401703694692,
+              "pattern_mae": 0.00042516472114164993,
+              "mass_mae": 0.006354701077305855,
+              "mean_abs_logit_delta": 4.1350998878479,
+              "max_abs_logit_delta": 17.09954071044922,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -2.5,
+              "desired_attention_mass": 0.020484031536258183,
+              "achieved_attention_mass": 0.020484031536258183,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 1,
+          "task": "Implement getNotifications(userId, page) that fetches /v2/users/{userId}/notifications?page={page} and returns parsed JSON.",
+          "forced_prefix": "\n\n```javascript\nconst res = await",
+          "committed_token_id": 12974,
+          "violating_token_id": 7807,
+          "committed_token_form": " axios",
+          "violating_token_form": " fetch",
+          "committed_token_sequence": [
+            12974
+          ],
+          "violating_token_sequence": [
+            7807
+          ],
+          "clean_sequence_tokens": 312,
+          "corrupt_sequence_tokens": 1839,
+          "rule_token_count": 18,
+          "violating_occurrences": 13,
+          "clean_margin": 3.25,
+          "corrupt_margin": -0.875,
+          "clean_rule_attention_mass": 0.04491937722867498,
+          "corrupt_rule_attention_mass": 0.016869652514847424,
+          "natural_rule_attention_drop": 0.028049724713827554,
+          "clean_corrupt_rule_pattern_mae": 0.0018288162514531554,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 1.875,
+              "desired_attention_mass": 0.04491937722867498,
+              "achieved_attention_mass": 0.061299752157468065,
+              "pattern_mae": 0.0011221131725715867,
+              "mass_mae": 0.018747636985678513,
+              "mean_abs_logit_delta": 1.3527874946594238,
+              "max_abs_logit_delta": 8.540597915649414,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": -1.125,
+              "desired_attention_mass": 0.04491937722867498,
+              "achieved_attention_mass": 0.03371619182423903,
+              "pattern_mae": 0.0008958050947022947,
+              "mass_mae": 0.015392642174936974,
+              "mean_abs_logit_delta": 2.178619384765625,
+              "max_abs_logit_delta": 12.8229398727417,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -2.25,
+              "desired_attention_mass": 0.04491937722867498,
+              "achieved_attention_mass": 0.05203659309504124,
+              "pattern_mae": 0.0008636538689713164,
+              "mass_mae": 0.010516494467782859,
+              "mean_abs_logit_delta": 3.947425365447998,
+              "max_abs_logit_delta": 15.094891548156738,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -0.625,
+              "desired_attention_mass": 0.04491937722867498,
+              "achieved_attention_mass": 0.04214164317370607,
+              "pattern_mae": 0.0010041566832184729,
+              "mass_mae": 0.01653075444874748,
+              "mean_abs_logit_delta": 4.400485992431641,
+              "max_abs_logit_delta": 17.321121215820312,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -0.875,
+              "desired_attention_mass": 0.016869652514847424,
+              "achieved_attention_mass": 0.016869652514847424,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 2,
+          "task": "Create an exportReport(reportId, format) function. It should GET /v2/reports/{reportId}/export?format={format}. Follow existing patterns.",
+          "forced_prefix": "\n\n```javascript\nconst res = await",
+          "committed_token_id": 12974,
+          "violating_token_id": 7807,
+          "committed_token_form": " axios",
+          "violating_token_form": " fetch",
+          "committed_token_sequence": [
+            12974
+          ],
+          "violating_token_sequence": [
+            7807
+          ],
+          "clean_sequence_tokens": 318,
+          "corrupt_sequence_tokens": 1845,
+          "rule_token_count": 18,
+          "violating_occurrences": 13,
+          "clean_margin": 4.875,
+          "corrupt_margin": -1.25,
+          "clean_rule_attention_mass": 0.04267459237374938,
+          "corrupt_rule_attention_mass": 0.019190692217447437,
+          "natural_rule_attention_drop": 0.023483900156301946,
+          "clean_corrupt_rule_pattern_mae": 0.0016112126221951956,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 0.875,
+              "desired_attention_mass": 0.04267459237374938,
+              "achieved_attention_mass": 0.04462202305260759,
+              "pattern_mae": 0.0006090529486755258,
+              "mass_mae": 0.01030269605689682,
+              "mean_abs_logit_delta": 1.290552020072937,
+              "max_abs_logit_delta": 9.804142951965332,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": -1.625,
+              "desired_attention_mass": 0.04267459237374938,
+              "achieved_attention_mass": 0.029642265039281204,
+              "pattern_mae": 0.000914468373489049,
+              "mass_mae": 0.01592570793973909,
+              "mean_abs_logit_delta": 2.28576397895813,
+              "max_abs_logit_delta": 12.740544319152832,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -1.375,
+              "desired_attention_mass": 0.04267459237374938,
+              "achieved_attention_mass": 0.03914722151911029,
+              "pattern_mae": 0.000832674039954257,
+              "mass_mae": 0.012050490347274508,
+              "mean_abs_logit_delta": 4.3119306564331055,
+              "max_abs_logit_delta": 16.71746826171875,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -0.75,
+              "desired_attention_mass": 0.04267459237374938,
+              "achieved_attention_mass": 0.03080453186367567,
+              "pattern_mae": 0.0009558710560388415,
+              "mass_mae": 0.016349263180298015,
+              "mean_abs_logit_delta": 4.523837566375732,
+              "max_abs_logit_delta": 16.840341567993164,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -1.25,
+              "desired_attention_mass": 0.019190692217447437,
+              "achieved_attention_mass": 0.019190692217447437,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 3,
+          "task": "Add a checkHealth() function that GETs /v2/health and returns the JSON status.",
+          "forced_prefix": "\n\n```javascript\nconst res = await",
+          "committed_token_id": 12974,
+          "violating_token_id": 7807,
+          "committed_token_form": " axios",
+          "violating_token_form": " fetch",
+          "committed_token_sequence": [
+            12974
+          ],
+          "violating_token_sequence": [
+            7807
+          ],
+          "clean_sequence_tokens": 305,
+          "corrupt_sequence_tokens": 1832,
+          "rule_token_count": 18,
+          "violating_occurrences": 13,
+          "clean_margin": 3.625,
+          "corrupt_margin": -1.25,
+          "clean_rule_attention_mass": 0.05324693894586884,
+          "corrupt_rule_attention_mass": 0.0163632003375544,
+          "natural_rule_attention_drop": 0.03688373860831444,
+          "clean_corrupt_rule_pattern_mae": 0.0022392822944451696,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 1.25,
+              "desired_attention_mass": 0.05324693894586884,
+              "achieved_attention_mass": 0.05987242745378843,
+              "pattern_mae": 0.0006748290893133694,
+              "mass_mae": 0.010608479859701429,
+              "mean_abs_logit_delta": 1.4081438779830933,
+              "max_abs_logit_delta": 8.552913665771484,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": -2.125,
+              "desired_attention_mass": 0.05324693894586884,
+              "achieved_attention_mass": 0.03926871673992047,
+              "pattern_mae": 0.001118455906949888,
+              "mass_mae": 0.019162735865952876,
+              "mean_abs_logit_delta": 2.271458864212036,
+              "max_abs_logit_delta": 12.588985443115234,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -2.75,
+              "desired_attention_mass": 0.05324693894586884,
+              "achieved_attention_mass": 0.06609215465589212,
+              "pattern_mae": 0.0015234185756036402,
+              "mass_mae": 0.01999171541403764,
+              "mean_abs_logit_delta": 3.603480815887451,
+              "max_abs_logit_delta": 14.191231727600098,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -0.875,
+              "desired_attention_mass": 0.05324693894586884,
+              "achieved_attention_mass": 0.03843064233660698,
+              "pattern_mae": 0.0010822731576179368,
+              "mass_mae": 0.018589485076238185,
+              "mean_abs_logit_delta": 4.613659858703613,
+              "max_abs_logit_delta": 17.04990005493164,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -1.25,
+              "desired_attention_mass": 0.0163632003375544,
+              "achieved_attention_mass": 0.0163632003375544,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 4,
+          "task": "Write a getSubscription(userId) function that fetches /v2/users/{userId}/subscription and returns JSON. Match the style of other functions in the file.",
+          "forced_prefix": "\n\n```javascript\nreturn",
+          "committed_token_id": 12974,
+          "violating_token_id": 7807,
+          "committed_token_form": " axios",
+          "violating_token_form": " fetch",
+          "committed_token_sequence": [
+            12974
+          ],
+          "violating_token_sequence": [
+            7807
+          ],
+          "clean_sequence_tokens": 314,
+          "corrupt_sequence_tokens": 1841,
+          "rule_token_count": 18,
+          "violating_occurrences": 13,
+          "clean_margin": -2.75,
+          "corrupt_margin": -10.5,
+          "clean_rule_attention_mass": 0.022699619822490674,
+          "corrupt_rule_attention_mass": 0.011908802382934552,
+          "natural_rule_attention_drop": 0.010790817439556122,
+          "clean_corrupt_rule_pattern_mae": 0.0008485377810967083,
+          "eligible": false,
+          "conditions": {
+            "constraint_restore": {
+              "margin": -10.25,
+              "desired_attention_mass": 0.022699619822490674,
+              "achieved_attention_mass": 0.02375935322533433,
+              "pattern_mae": 9.083089284663751e-05,
+              "mass_mae": 0.0014699747984055788,
+              "mean_abs_logit_delta": 1.3090548515319824,
+              "max_abs_logit_delta": 8.60492992401123,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": -5.25,
+              "desired_attention_mass": 0.022699619822490674,
+              "achieved_attention_mass": 0.03049006635466447,
+              "pattern_mae": 0.0007069928667008823,
+              "mass_mae": 0.011045506517313277,
+              "mean_abs_logit_delta": 2.2315094470977783,
+              "max_abs_logit_delta": 12.184955596923828,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -10.875,
+              "desired_attention_mass": 0.022699619822490674,
+              "achieved_attention_mass": 0.02283647606292596,
+              "pattern_mae": 0.00015032006908418576,
+              "mass_mae": 0.0021655191488277456,
+              "mean_abs_logit_delta": 3.8132519721984863,
+              "max_abs_logit_delta": 13.91249942779541,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -11.0,
+              "desired_attention_mass": 0.022699619822490674,
+              "achieved_attention_mass": 0.0222434364259243,
+              "pattern_mae": 0.00020278299808314143,
+              "mass_mae": 0.003312324146883419,
+              "mean_abs_logit_delta": 3.71466326713562,
+              "max_abs_logit_delta": 15.797033309936523,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -10.5,
+              "desired_attention_mass": 0.011908802382934552,
+              "achieved_attention_mass": 0.011908802382934552,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 5,
+          "task": "Implement getNotifications(userId, page) that fetches /v2/users/{userId}/notifications?page={page} and returns parsed JSON.",
+          "forced_prefix": "\n\n```javascript\nreturn",
+          "committed_token_id": 12974,
+          "violating_token_id": 7807,
+          "committed_token_form": " axios",
+          "violating_token_form": " fetch",
+          "committed_token_sequence": [
+            12974
+          ],
+          "violating_token_sequence": [
+            7807
+          ],
+          "clean_sequence_tokens": 309,
+          "corrupt_sequence_tokens": 1836,
+          "rule_token_count": 18,
+          "violating_occurrences": 13,
+          "clean_margin": -1.125,
+          "corrupt_margin": -8.375,
+          "clean_rule_attention_mass": 0.02862472416689763,
+          "corrupt_rule_attention_mass": 0.012669881232655965,
+          "natural_rule_attention_drop": 0.015954842934241664,
+          "clean_corrupt_rule_pattern_mae": 0.001058596752745171,
+          "eligible": false,
+          "conditions": {
+            "constraint_restore": {
+              "margin": -7.125,
+              "desired_attention_mass": 0.02862472416689763,
+              "achieved_attention_mass": 0.030271817070360366,
+              "pattern_mae": 0.00015770482605148572,
+              "mass_mae": 0.00254958730790979,
+              "mean_abs_logit_delta": 1.384661078453064,
+              "max_abs_logit_delta": 8.658012390136719,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": -6.375,
+              "desired_attention_mass": 0.02862472416689763,
+              "achieved_attention_mass": 0.038514409285898395,
+              "pattern_mae": 0.000997874387394404,
+              "mass_mae": 0.015546186810332494,
+              "mean_abs_logit_delta": 2.121765613555908,
+              "max_abs_logit_delta": 13.0554838180542,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -9.0,
+              "desired_attention_mass": 0.02862472416689763,
+              "achieved_attention_mass": 0.028673443764161605,
+              "pattern_mae": 0.0002198796040689698,
+              "mass_mae": 0.002373857843429925,
+              "mean_abs_logit_delta": 3.7691988945007324,
+              "max_abs_logit_delta": 14.622697830200195,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -8.375,
+              "desired_attention_mass": 0.02862472416689763,
+              "achieved_attention_mass": 0.026258085997631915,
+              "pattern_mae": 0.0003331840174234038,
+              "mass_mae": 0.00555403545149602,
+              "mean_abs_logit_delta": 3.5695183277130127,
+              "max_abs_logit_delta": 15.131099700927734,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -8.375,
+              "desired_attention_mass": 0.012669881232655965,
+              "achieved_attention_mass": 0.012669881232655965,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 6,
+          "task": "Implement getNotifications(userId, page) that fetches /v2/users/{userId}/notifications?page={page} and returns parsed JSON.",
+          "forced_prefix": "\n\n```javascript\nconst response =",
+          "committed_token_id": 12974,
+          "violating_token_id": 7807,
+          "committed_token_form": " axios",
+          "violating_token_form": " fetch",
+          "committed_token_sequence": [
+            12974
+          ],
+          "violating_token_sequence": [
+            7807
+          ],
+          "clean_sequence_tokens": 311,
+          "corrupt_sequence_tokens": 1838,
+          "rule_token_count": 18,
+          "violating_occurrences": 13,
+          "clean_margin": 4.375,
+          "corrupt_margin": -3.375,
+          "clean_rule_attention_mass": 0.06046452409086319,
+          "corrupt_rule_attention_mass": 0.010940570339488868,
+          "natural_rule_attention_drop": 0.04952395375137432,
+          "clean_corrupt_rule_pattern_mae": 0.0028579878943184246,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 1.125,
+              "desired_attention_mass": 0.06046452409086319,
+              "achieved_attention_mass": 0.06408419653486747,
+              "pattern_mae": 0.0008288245054735363,
+              "mass_mae": 0.013041957415855275,
+              "mean_abs_logit_delta": 1.707502007484436,
+              "max_abs_logit_delta": 8.501392364501953,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": -3.625,
+              "desired_attention_mass": 0.06046452409086319,
+              "achieved_attention_mass": 0.05385459135644711,
+              "pattern_mae": 0.0007501299139151413,
+              "mass_mae": 0.010195664980318934,
+              "mean_abs_logit_delta": 2.108764410018921,
+              "max_abs_logit_delta": 11.974309921264648,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -2.375,
+              "desired_attention_mass": 0.06046452409086319,
+              "achieved_attention_mass": 0.060279990474765115,
+              "pattern_mae": 0.0012029443220783903,
+              "mass_mae": 0.01614361792095364,
+              "mean_abs_logit_delta": 3.503267288208008,
+              "max_abs_logit_delta": 14.258121490478516,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -2.875,
+              "desired_attention_mass": 0.06046452409086319,
+              "achieved_attention_mass": 0.0459334824520808,
+              "pattern_mae": 0.0013756442958065935,
+              "mass_mae": 0.02376211842616053,
+              "mean_abs_logit_delta": 4.251852989196777,
+              "max_abs_logit_delta": 17.459806442260742,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -3.375,
+              "desired_attention_mass": 0.010940570339488868,
+              "achieved_attention_mass": 0.010940570339488868,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 7,
+          "task": "Write a getSubscription(userId) function that fetches /v2/users/{userId}/subscription and returns JSON. Match the style of other functions in the file.",
+          "forced_prefix": "\n\n```javascript\nconst response =",
+          "committed_token_id": 12974,
+          "violating_token_id": 7807,
+          "committed_token_form": " axios",
+          "violating_token_form": " fetch",
+          "committed_token_sequence": [
+            12974
+          ],
+          "violating_token_sequence": [
+            7807
+          ],
+          "clean_sequence_tokens": 316,
+          "corrupt_sequence_tokens": 1843,
+          "rule_token_count": 18,
+          "violating_occurrences": 13,
+          "clean_margin": 1.625,
+          "corrupt_margin": -4.375,
+          "clean_rule_attention_mass": 0.02853522550028104,
+          "corrupt_rule_attention_mass": 0.008131918604843892,
+          "natural_rule_attention_drop": 0.020403306895437148,
+          "clean_corrupt_rule_pattern_mae": 0.0012010742749015873,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": -1.625,
+              "desired_attention_mass": 0.02853522550028104,
+              "achieved_attention_mass": 0.03080825500476819,
+              "pattern_mae": 0.00017584160801001976,
+              "mass_mae": 0.002854657098886002,
+              "mean_abs_logit_delta": 1.4572877883911133,
+              "max_abs_logit_delta": 7.790651321411133,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": -1.75,
+              "desired_attention_mass": 0.02853522550028104,
+              "achieved_attention_mass": 0.03185080027637573,
+              "pattern_mae": 0.00026530105836942454,
+              "mass_mae": 0.004061500507864716,
+              "mean_abs_logit_delta": 2.21075439453125,
+              "max_abs_logit_delta": 12.128310203552246,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -5.0,
+              "desired_attention_mass": 0.02853522550028104,
+              "achieved_attention_mass": 0.027527556468087893,
+              "pattern_mae": 0.0002351715337191798,
+              "mass_mae": 0.002620066070309034,
+              "mean_abs_logit_delta": 3.185228109359741,
+              "max_abs_logit_delta": 14.938011169433594,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -4.625,
+              "desired_attention_mass": 0.02853522550028104,
+              "achieved_attention_mass": 0.023997083736153748,
+              "pattern_mae": 0.00038567074618465715,
+              "mass_mae": 0.006581884984580728,
+              "mean_abs_logit_delta": 4.0098114013671875,
+              "max_abs_logit_delta": 16.442707061767578,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -4.375,
+              "desired_attention_mass": 0.008131918604843892,
+              "achieved_attention_mass": 0.008131918604843892,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 8,
+          "task": "Add a checkHealth() function that GETs /v2/health and returns the JSON status.",
+          "forced_prefix": "\n\n```javascript\nreturn",
+          "committed_token_id": 12974,
+          "violating_token_id": 7807,
+          "committed_token_form": " axios",
+          "violating_token_form": " fetch",
+          "committed_token_sequence": [
+            12974
+          ],
+          "violating_token_sequence": [
+            7807
+          ],
+          "clean_sequence_tokens": 302,
+          "corrupt_sequence_tokens": 1829,
+          "rule_token_count": 18,
+          "violating_occurrences": 13,
+          "clean_margin": -1.625,
+          "corrupt_margin": -6.0,
+          "clean_rule_attention_mass": 0.029247906990349293,
+          "corrupt_rule_attention_mass": 0.01308985731492822,
+          "natural_rule_attention_drop": 0.016158049675421074,
+          "clean_corrupt_rule_pattern_mae": 0.001133749862604488,
+          "eligible": false,
+          "conditions": {
+            "constraint_restore": {
+              "margin": -5.875,
+              "desired_attention_mass": 0.029247906990349293,
+              "achieved_attention_mass": 0.03324513674642031,
+              "pattern_mae": 0.0003117275695191123,
+              "mass_mae": 0.005328914392381334,
+              "mean_abs_logit_delta": 1.4598793983459473,
+              "max_abs_logit_delta": 9.110177993774414,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": -3.75,
+              "desired_attention_mass": 0.029247906990349293,
+              "achieved_attention_mass": 0.03206004338482252,
+              "pattern_mae": 0.0006442457890023853,
+              "mass_mae": 0.009219879620314505,
+              "mean_abs_logit_delta": 2.157970905303955,
+              "max_abs_logit_delta": 12.753682136535645,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -6.625,
+              "desired_attention_mass": 0.029247906990349293,
+              "achieved_attention_mass": 0.033242300690080114,
+              "pattern_mae": 0.00037034509911721287,
+              "mass_mae": 0.005292865550682808,
+              "mean_abs_logit_delta": 3.6597816944122314,
+              "max_abs_logit_delta": 14.762883186340332,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -5.75,
+              "desired_attention_mass": 0.029247906990349293,
+              "achieved_attention_mass": 0.029287270807589475,
+              "pattern_mae": 0.0004434709539614582,
+              "mass_mae": 0.007296046467112878,
+              "mean_abs_logit_delta": 3.7074954509735107,
+              "max_abs_logit_delta": 16.366943359375,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -6.0,
+              "desired_attention_mass": 0.01308985731492822,
+              "achieved_attention_mass": 0.01308985731492822,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 9,
+          "task": "Add a new function getRateCard(customerId, tier) to the API file. It should GET /v2/customers/{customerId}/rate-card?tier={tier} and return the parsed JSON. Follow the existing code patterns.",
+          "forced_prefix": "\n\n```javascript\nreturn",
+          "committed_token_id": 12974,
+          "violating_token_id": 7807,
+          "committed_token_form": " axios",
+          "violating_token_form": " fetch",
+          "committed_token_sequence": [
+            12974
+          ],
+          "violating_token_sequence": [
+            7807
+          ],
+          "clean_sequence_tokens": 329,
+          "corrupt_sequence_tokens": 1856,
+          "rule_token_count": 18,
+          "violating_occurrences": 13,
+          "clean_margin": 0.625,
+          "corrupt_margin": -7.875,
+          "clean_rule_attention_mass": 0.032868968609433905,
+          "corrupt_rule_attention_mass": 0.01184125798037992,
+          "natural_rule_attention_drop": 0.021027710629053984,
+          "clean_corrupt_rule_pattern_mae": 0.0012635931354732467,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": -7.25,
+              "desired_attention_mass": 0.032868968609433905,
+              "achieved_attention_mass": 0.03320977263725721,
+              "pattern_mae": 0.00018817986766897285,
+              "mass_mae": 0.0030179966662007454,
+              "mean_abs_logit_delta": 1.592449426651001,
+              "max_abs_logit_delta": 8.094733238220215,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": -5.75,
+              "desired_attention_mass": 0.032868968609433905,
+              "achieved_attention_mass": 0.036119406971220784,
+              "pattern_mae": 0.0008562247136908879,
+              "mass_mae": 0.01301899683312513,
+              "mean_abs_logit_delta": 2.165255546569824,
+              "max_abs_logit_delta": 12.247422218322754,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -8.0,
+              "desired_attention_mass": 0.032868968609433905,
+              "achieved_attention_mass": 0.034198796519866355,
+              "pattern_mae": 0.00033981670724013104,
+              "mass_mae": 0.003493811671013156,
+              "mean_abs_logit_delta": 3.7617924213409424,
+              "max_abs_logit_delta": 15.054335594177246,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -7.875,
+              "desired_attention_mass": 0.032868968609433905,
+              "achieved_attention_mass": 0.024048393234037437,
+              "pattern_mae": 0.0006585611883145667,
+              "mass_mae": 0.011713194731363239,
+              "mean_abs_logit_delta": 4.131591320037842,
+              "max_abs_logit_delta": 17.22968292236328,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -7.875,
+              "desired_attention_mass": 0.01184125798037992,
+              "achieved_attention_mass": 0.01184125798037992,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 10,
+          "task": "Add a checkHealth() function that GETs /v2/health and returns the JSON status.",
+          "forced_prefix": "\n\n```javascript\nconst response =",
+          "committed_token_id": 12974,
+          "violating_token_id": 7807,
+          "committed_token_form": " axios",
+          "violating_token_form": " fetch",
+          "committed_token_sequence": [
+            12974
+          ],
+          "violating_token_sequence": [
+            7807
+          ],
+          "clean_sequence_tokens": 304,
+          "corrupt_sequence_tokens": 1831,
+          "rule_token_count": 18,
+          "violating_occurrences": 13,
+          "clean_margin": 4.375,
+          "corrupt_margin": -3.0,
+          "clean_rule_attention_mass": 0.05685610001763472,
+          "corrupt_rule_attention_mass": 0.012213453740024796,
+          "natural_rule_attention_drop": 0.04464264627760992,
+          "clean_corrupt_rule_pattern_mae": 0.0026533888370837443,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 0.75,
+              "desired_attention_mass": 0.05685610001763472,
+              "achieved_attention_mass": 0.05858587015133638,
+              "pattern_mae": 0.0005838092854621488,
+              "mass_mae": 0.008761812535410102,
+              "mean_abs_logit_delta": 1.6167081594467163,
+              "max_abs_logit_delta": 9.03793716430664,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": -3.625,
+              "desired_attention_mass": 0.05685610001763472,
+              "achieved_attention_mass": 0.05443456045423563,
+              "pattern_mae": 0.0006797679884934601,
+              "mass_mae": 0.009440096211619675,
+              "mean_abs_logit_delta": 2.1860578060150146,
+              "max_abs_logit_delta": 11.335283279418945,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -3.375,
+              "desired_attention_mass": 0.05685610001763472,
+              "achieved_attention_mass": 0.07214912456961778,
+              "pattern_mae": 0.0015433521323127653,
+              "mass_mae": 0.021621803587410025,
+              "mean_abs_logit_delta": 3.735257863998413,
+              "max_abs_logit_delta": 15.908172607421875,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -2.75,
+              "desired_attention_mass": 0.05685610001763472,
+              "achieved_attention_mass": 0.042006548350820176,
+              "pattern_mae": 0.0011546847528314595,
+              "mass_mae": 0.0199849044617552,
+              "mean_abs_logit_delta": 4.365870952606201,
+              "max_abs_logit_delta": 18.665491104125977,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -3.0,
+              "desired_attention_mass": 0.012213453740024796,
+              "achieved_attention_mass": 0.012213453740024796,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 11,
+          "task": "Create an exportReport(reportId, format) function. It should GET /v2/reports/{reportId}/export?format={format}. Follow existing patterns.",
+          "forced_prefix": "\n\n```javascript\nconst response =",
+          "committed_token_id": 12974,
+          "violating_token_id": 7807,
+          "committed_token_form": " axios",
+          "violating_token_form": " fetch",
+          "committed_token_sequence": [
+            12974
+          ],
+          "violating_token_sequence": [
+            7807
+          ],
+          "clean_sequence_tokens": 317,
+          "corrupt_sequence_tokens": 1844,
+          "rule_token_count": 18,
+          "violating_occurrences": 13,
+          "clean_margin": 4.25,
+          "corrupt_margin": -1.625,
+          "clean_rule_attention_mass": 0.042175221973313734,
+          "corrupt_rule_attention_mass": 0.01180505371079422,
+          "natural_rule_attention_drop": 0.030370168262519516,
+          "clean_corrupt_rule_pattern_mae": 0.0018054247820355857,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 0.625,
+              "desired_attention_mass": 0.042175221973313734,
+              "achieved_attention_mass": 0.038972242162204705,
+              "pattern_mae": 0.0004834174862760567,
+              "mass_mae": 0.008371916644136945,
+              "mean_abs_logit_delta": 1.5146337747573853,
+              "max_abs_logit_delta": 8.443685531616211,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": -2.875,
+              "desired_attention_mass": 0.042175221973313734,
+              "achieved_attention_mass": 0.03859451914635988,
+              "pattern_mae": 0.0005572531211048324,
+              "mass_mae": 0.009112685887465397,
+              "mean_abs_logit_delta": 2.2240710258483887,
+              "max_abs_logit_delta": 11.530293464660645,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -1.875,
+              "desired_attention_mass": 0.042175221973313734,
+              "achieved_attention_mass": 0.034811722938544475,
+              "pattern_mae": 0.0005964204214811056,
+              "mass_mae": 0.009358628482844394,
+              "mean_abs_logit_delta": 3.7344820499420166,
+              "max_abs_logit_delta": 14.42951774597168,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -1.75,
+              "desired_attention_mass": 0.042175221973313734,
+              "achieved_attention_mass": 0.030975565744134095,
+              "pattern_mae": 0.0008001393526823309,
+              "mass_mae": 0.013928543763400879,
+              "mean_abs_logit_delta": 4.113997936248779,
+              "max_abs_logit_delta": 17.15045166015625,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -1.625,
+              "desired_attention_mass": 0.01180505371079422,
+              "achieved_attention_mass": 0.01180505371079422,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 12,
+          "task": "Create an exportReport(reportId, format) function. It should GET /v2/reports/{reportId}/export?format={format}. Follow existing patterns.",
+          "forced_prefix": "\n\n```javascript\nreturn",
+          "committed_token_id": 12974,
+          "violating_token_id": 7807,
+          "committed_token_form": " axios",
+          "violating_token_form": " fetch",
+          "committed_token_sequence": [
+            12974
+          ],
+          "violating_token_sequence": [
+            7807
+          ],
+          "clean_sequence_tokens": 315,
+          "corrupt_sequence_tokens": 1842,
+          "rule_token_count": 18,
+          "violating_occurrences": 13,
+          "clean_margin": 2.125,
+          "corrupt_margin": -6.25,
+          "clean_rule_attention_mass": 0.03375690093693825,
+          "corrupt_rule_attention_mass": 0.016825001543531053,
+          "natural_rule_attention_drop": 0.016931899393407196,
+          "clean_corrupt_rule_pattern_mae": 0.0011683186748996377,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": -6.0,
+              "desired_attention_mass": 0.03375690093693825,
+              "achieved_attention_mass": 0.030512769384166367,
+              "pattern_mae": 0.0002316082709512557,
+              "mass_mae": 0.0037115872770440406,
+              "mean_abs_logit_delta": 1.2958168983459473,
+              "max_abs_logit_delta": 8.604934692382812,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": -4.5,
+              "desired_attention_mass": 0.03375690093693825,
+              "achieved_attention_mass": 0.03497460384208422,
+              "pattern_mae": 0.0006262713493295171,
+              "mass_mae": 0.009240215732391404,
+              "mean_abs_logit_delta": 2.12925124168396,
+              "max_abs_logit_delta": 14.578178405761719,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -6.0,
+              "desired_attention_mass": 0.03375690093693825,
+              "achieved_attention_mass": 0.03100739946015752,
+              "pattern_mae": 0.00033212834666930855,
+              "mass_mae": 0.004506730458860357,
+              "mean_abs_logit_delta": 3.299208879470825,
+              "max_abs_logit_delta": 12.74151611328125,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -6.375,
+              "desired_attention_mass": 0.03375690093693825,
+              "achieved_attention_mass": 0.023470956545609694,
+              "pattern_mae": 0.0006501016982488531,
+              "mass_mae": 0.011594202420383226,
+              "mean_abs_logit_delta": 3.966456174850464,
+              "max_abs_logit_delta": 17.533584594726562,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -6.25,
+              "desired_attention_mass": 0.016825001543531053,
+              "achieved_attention_mass": 0.016825001543531053,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 13,
+          "task": "Add a new function getRateCard(customerId, tier) to the API file. It should GET /v2/customers/{customerId}/rate-card?tier={tier} and return the parsed JSON. Follow the existing code patterns.",
+          "forced_prefix": "\n\n```javascript\nconst res = await",
+          "committed_token_id": 12974,
+          "violating_token_id": 7807,
+          "committed_token_form": " axios",
+          "violating_token_form": " fetch",
+          "committed_token_sequence": [
+            12974
+          ],
+          "violating_token_sequence": [
+            7807
+          ],
+          "clean_sequence_tokens": 332,
+          "corrupt_sequence_tokens": 1859,
+          "rule_token_count": 18,
+          "violating_occurrences": 13,
+          "clean_margin": 5.5,
+          "corrupt_margin": -0.625,
+          "clean_rule_attention_mass": 0.054352771813193194,
+          "corrupt_rule_attention_mass": 0.02854133563904235,
+          "natural_rule_attention_drop": 0.025811436174150843,
+          "clean_corrupt_rule_pattern_mae": 0.0017798929922999097,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 0.25,
+              "desired_attention_mass": 0.054352771813193194,
+              "achieved_attention_mass": 0.054506907203736216,
+              "pattern_mae": 0.0005763484564690421,
+              "mass_mae": 0.009659875722718425,
+              "mean_abs_logit_delta": 1.2311831712722778,
+              "max_abs_logit_delta": 8.149798393249512,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": -1.0,
+              "desired_attention_mass": 0.054352771813193194,
+              "achieved_attention_mass": 0.04021021666435095,
+              "pattern_mae": 0.0011404405556207236,
+              "mass_mae": 0.01838936638915374,
+              "mean_abs_logit_delta": 2.158273458480835,
+              "max_abs_logit_delta": 11.259349822998047,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -1.75,
+              "desired_attention_mass": 0.054352771813193194,
+              "achieved_attention_mass": 0.04677026543336419,
+              "pattern_mae": 0.0010633430837725217,
+              "mass_mae": 0.014982077452049661,
+              "mean_abs_logit_delta": 4.145571231842041,
+              "max_abs_logit_delta": 15.361924171447754,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -0.125,
+              "desired_attention_mass": 0.054352771813193194,
+              "achieved_attention_mass": 0.036247970894552194,
+              "pattern_mae": 0.001303011535548229,
+              "mass_mae": 0.022651030533150054,
+              "mean_abs_logit_delta": 4.807965278625488,
+              "max_abs_logit_delta": 17.74732780456543,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -0.625,
+              "desired_attention_mass": 0.02854133563904235,
+              "achieved_attention_mass": 0.02854133563904235,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 14,
+          "task": "Add a new function getRateCard(customerId, tier) to the API file. It should GET /v2/customers/{customerId}/rate-card?tier={tier} and return the parsed JSON. Follow the existing code patterns.",
+          "forced_prefix": "\n\n```javascript\nconst response =",
+          "committed_token_id": 12974,
+          "violating_token_id": 7807,
+          "committed_token_form": " axios",
+          "violating_token_form": " fetch",
+          "committed_token_sequence": [
+            12974
+          ],
+          "violating_token_sequence": [
+            7807
+          ],
+          "clean_sequence_tokens": 331,
+          "corrupt_sequence_tokens": 1858,
+          "rule_token_count": 18,
+          "violating_occurrences": 13,
+          "clean_margin": 4.625,
+          "corrupt_margin": -3.5,
+          "clean_rule_attention_mass": 0.045998120214790106,
+          "corrupt_rule_attention_mass": 0.01103229016567079,
+          "natural_rule_attention_drop": 0.034965830049119316,
+          "clean_corrupt_rule_pattern_mae": 0.0020095178557452387,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": -1.0,
+              "desired_attention_mass": 0.045998120214790106,
+              "achieved_attention_mass": 0.04277625357588896,
+              "pattern_mae": 0.0003774448314988359,
+              "mass_mae": 0.006111347644876402,
+              "mean_abs_logit_delta": 1.5543429851531982,
+              "max_abs_logit_delta": 11.00849437713623,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": -3.375,
+              "desired_attention_mass": 0.045998120214790106,
+              "achieved_attention_mass": 0.04771221722834385,
+              "pattern_mae": 0.00043735011730369966,
+              "mass_mae": 0.006311520715826191,
+              "mean_abs_logit_delta": 2.1763076782226562,
+              "max_abs_logit_delta": 11.434855461120605,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -2.5,
+              "desired_attention_mass": 0.045998120214790106,
+              "achieved_attention_mass": 0.041014166441387855,
+              "pattern_mae": 0.0008108196244183301,
+              "mass_mae": 0.011603877351892432,
+              "mean_abs_logit_delta": 4.225217819213867,
+              "max_abs_logit_delta": 18.187063217163086,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -3.25,
+              "desired_attention_mass": 0.045998120214790106,
+              "achieved_attention_mass": 0.02948389073403982,
+              "pattern_mae": 0.0010567578531033807,
+              "mass_mae": 0.018705440603438407,
+              "mean_abs_logit_delta": 4.503830909729004,
+              "max_abs_logit_delta": 18.282638549804688,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -3.5,
+              "desired_attention_mass": 0.01103229016567079,
+              "achieved_attention_mass": 0.01103229016567079,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "python",
+      "label": "Python / Backend",
+      "scenario_file": "scenario_python_multi.jsonl",
+      "primary_constraint_id": "C1_http",
+      "constraint": {
+        "id": "C1_http",
+        "committed": "httpx",
+        "violating": "requests",
+        "forced_prefixes": [
+          "\n\n```python\nasync def fetch_data(url: str):\n    response = await ",
+          "\n\n```python\n    client = ",
+          "\n\n```python\n    resp = await "
+        ]
+      },
+      "trial_grid": {
+        "configured_tasks": 5,
+        "configured_prefixes": 3,
+        "selected_pairs": 15
+      },
+      "summaries": {
+        "all_trials": {
+          "n": 15,
+          "clean": {
+            "n": 15,
+            "flip_rate": 1.0,
+            "mean_margin": 8.041666666666666
+          },
+          "corrupt": {
+            "n": 15,
+            "flip_rate": 0.8666666666666667,
+            "mean_margin": 1.55
+          },
+          "conditions": {
+            "constraint_restore": {
+              "n": 15,
+              "flip_rate": 1.0,
+              "mean_margin": 3.8625
+            },
+            "rag_violation_restore": {
+              "n": 15,
+              "flip_rate": 0.9333333333333333,
+              "mean_margin": 2.9291666666666667
+            },
+            "rag_random_restore": {
+              "n": 15,
+              "flip_rate": 0.6666666666666666,
+              "mean_margin": 1.05
+            },
+            "rag_recent_restore": {
+              "n": 15,
+              "flip_rate": 0.7333333333333333,
+              "mean_margin": 0.8916666666666667
+            },
+            "constraint_identity": {
+              "n": 15,
+              "flip_rate": 0.8666666666666667,
+              "mean_margin": 1.55
+            }
+          },
+          "attention": {
+            "clean_rule_attention_mass": 0.06754723212036948,
+            "corrupt_rule_attention_mass": 0.021862458176194477,
+            "natural_rule_attention_drop": 0.04568477394417502,
+            "clean_corrupt_rule_pattern_mae": 0.002672011704924397
+          },
+          "intervention_fidelity": {
+            "constraint_restore": {
+              "mean_pattern_mae": 0.0007376625705430156,
+              "max_pattern_mae": 0.001340091615789928,
+              "convergence_rate": 1.0
+            },
+            "rag_violation_restore": {
+              "mean_pattern_mae": 0.0010410307552354845,
+              "max_pattern_mae": 0.001437894129104769,
+              "convergence_rate": 1.0
+            },
+            "rag_random_restore": {
+              "mean_pattern_mae": 0.0012367266043279068,
+              "max_pattern_mae": 0.001990349658836539,
+              "convergence_rate": 1.0
+            },
+            "rag_recent_restore": {
+              "mean_pattern_mae": 0.001020613925499138,
+              "max_pattern_mae": 0.0014486951064240062,
+              "convergence_rate": 1.0
+            },
+            "constraint_identity": {
+              "mean_pattern_mae": 0.0,
+              "max_pattern_mae": 0.0,
+              "convergence_rate": 1.0
+            }
+          }
+        },
+        "override_eligible": {
+          "n": 15,
+          "clean": {
+            "n": 15,
+            "flip_rate": 1.0,
+            "mean_margin": 8.041666666666666
+          },
+          "corrupt": {
+            "n": 15,
+            "flip_rate": 0.8666666666666667,
+            "mean_margin": 1.55
+          },
+          "conditions": {
+            "constraint_restore": {
+              "n": 15,
+              "flip_rate": 1.0,
+              "mean_margin": 3.8625
+            },
+            "rag_violation_restore": {
+              "n": 15,
+              "flip_rate": 0.9333333333333333,
+              "mean_margin": 2.9291666666666667
+            },
+            "rag_random_restore": {
+              "n": 15,
+              "flip_rate": 0.6666666666666666,
+              "mean_margin": 1.05
+            },
+            "rag_recent_restore": {
+              "n": 15,
+              "flip_rate": 0.7333333333333333,
+              "mean_margin": 0.8916666666666667
+            },
+            "constraint_identity": {
+              "n": 15,
+              "flip_rate": 0.8666666666666667,
+              "mean_margin": 1.55
+            }
+          },
+          "attention": {
+            "clean_rule_attention_mass": 0.06754723212036948,
+            "corrupt_rule_attention_mass": 0.021862458176194477,
+            "natural_rule_attention_drop": 0.04568477394417502,
+            "clean_corrupt_rule_pattern_mae": 0.002672011704924397
+          },
+          "intervention_fidelity": {
+            "constraint_restore": {
+              "mean_pattern_mae": 0.0007376625705430156,
+              "max_pattern_mae": 0.001340091615789928,
+              "convergence_rate": 1.0
+            },
+            "rag_violation_restore": {
+              "mean_pattern_mae": 0.0010410307552354845,
+              "max_pattern_mae": 0.001437894129104769,
+              "convergence_rate": 1.0
+            },
+            "rag_random_restore": {
+              "mean_pattern_mae": 0.0012367266043279068,
+              "max_pattern_mae": 0.001990349658836539,
+              "convergence_rate": 1.0
+            },
+            "rag_recent_restore": {
+              "mean_pattern_mae": 0.001020613925499138,
+              "max_pattern_mae": 0.0014486951064240062,
+              "convergence_rate": 1.0
+            },
+            "constraint_identity": {
+              "mean_pattern_mae": 0.0,
+              "max_pattern_mae": 0.0,
+              "convergence_rate": 1.0
+            }
+          }
+        }
+      },
+      "trials": [
+        {
+          "index": 0,
+          "task": "Create a health_check() function that hits /api/health and returns status.",
+          "forced_prefix": "\n\n```python\n    client =",
+          "committed_token_id": 1758,
+          "violating_token_id": 7388,
+          "committed_token_form": " httpx",
+          "violating_token_form": " requests",
+          "committed_token_sequence": [
+            1758,
+            87
+          ],
+          "violating_token_sequence": [
+            7388
+          ],
+          "clean_sequence_tokens": 308,
+          "corrupt_sequence_tokens": 1533,
+          "rule_token_count": 18,
+          "violating_occurrences": 12,
+          "clean_margin": 9.25,
+          "corrupt_margin": 2.5,
+          "clean_rule_attention_mass": 0.08059159544511484,
+          "corrupt_rule_attention_mass": 0.03253932447674183,
+          "natural_rule_attention_drop": 0.04805227096837301,
+          "clean_corrupt_rule_pattern_mae": 0.0030032422621913543,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 5.75,
+              "desired_attention_mass": 0.08059159544511484,
+              "achieved_attention_mass": 0.07369927417200345,
+              "pattern_mae": 0.0009648194935345181,
+              "mass_mae": 0.014040209969747454,
+              "mean_abs_logit_delta": 1.1702028512954712,
+              "max_abs_logit_delta": 10.28169059753418,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 5.125,
+              "desired_attention_mass": 0.08059159544511484,
+              "achieved_attention_mass": 0.07564966667156953,
+              "pattern_mae": 0.0009243752932749116,
+              "mass_mae": 0.011946546992895981,
+              "mean_abs_logit_delta": 2.9947729110717773,
+              "max_abs_logit_delta": 15.3777437210083,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 4.75,
+              "desired_attention_mass": 0.08059159544511484,
+              "achieved_attention_mass": 0.07465901562514213,
+              "pattern_mae": 0.001967944439596837,
+              "mass_mae": 0.0283818804533579,
+              "mean_abs_logit_delta": 3.996077537536621,
+              "max_abs_logit_delta": 18.350204467773438,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 2.875,
+              "desired_attention_mass": 0.08059159544511484,
+              "achieved_attention_mass": 0.07082498947588298,
+              "pattern_mae": 0.0012867505258607427,
+              "mass_mae": 0.019629459756498154,
+              "mean_abs_logit_delta": 2.7595584392547607,
+              "max_abs_logit_delta": 15.23128890991211,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 2.5,
+              "desired_attention_mass": 0.03253932447674183,
+              "achieved_attention_mass": 0.03253932447674183,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 1,
+          "task": "Create a health_check() function that hits /api/health and returns status.",
+          "forced_prefix": "\n\n```python\nasync def fetch_data(url: str):\n    response = await",
+          "committed_token_id": 1758,
+          "violating_token_id": 7388,
+          "committed_token_form": " httpx",
+          "violating_token_form": " requests",
+          "committed_token_sequence": [
+            1758,
+            87
+          ],
+          "violating_token_sequence": [
+            7388
+          ],
+          "clean_sequence_tokens": 317,
+          "corrupt_sequence_tokens": 1542,
+          "rule_token_count": 18,
+          "violating_occurrences": 12,
+          "clean_margin": 7.625,
+          "corrupt_margin": 2.0,
+          "clean_rule_attention_mass": 0.06696191781128828,
+          "corrupt_rule_attention_mass": 0.026924668453060664,
+          "natural_rule_attention_drop": 0.04003724935822762,
+          "clean_corrupt_rule_pattern_mae": 0.0023706154606770724,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 3.25,
+              "desired_attention_mass": 0.06696191781128828,
+              "achieved_attention_mass": 0.06877109297336294,
+              "pattern_mae": 0.0005809250603935932,
+              "mass_mae": 0.007213799322086673,
+              "mean_abs_logit_delta": 1.2376534938812256,
+              "max_abs_logit_delta": 11.535307884216309,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 4.375,
+              "desired_attention_mass": 0.06696191781128828,
+              "achieved_attention_mass": 0.05122342376181713,
+              "pattern_mae": 0.0010864002605768081,
+              "mass_mae": 0.018266720996157695,
+              "mean_abs_logit_delta": 3.2569420337677,
+              "max_abs_logit_delta": 15.189817428588867,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 1.375,
+              "desired_attention_mass": 0.06696191781128828,
+              "achieved_attention_mass": 0.06596672409572281,
+              "pattern_mae": 0.001189190881212618,
+              "mass_mae": 0.01691584800853609,
+              "mean_abs_logit_delta": 3.9189062118530273,
+              "max_abs_logit_delta": 15.998896598815918,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 0.875,
+              "desired_attention_mass": 0.06696191781128828,
+              "achieved_attention_mass": 0.07270059354889852,
+              "pattern_mae": 0.0009241839034075383,
+              "mass_mae": 0.01218470137749906,
+              "mean_abs_logit_delta": 3.2891392707824707,
+              "max_abs_logit_delta": 15.68896198272705,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 2.0,
+              "desired_attention_mass": 0.026924668453060664,
+              "achieved_attention_mass": 0.026924668453060664,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 2,
+          "task": "Write get_orders(customer_id, page) that fetches /api/orders with pagination. Follow the code style.",
+          "forced_prefix": "\n\n```python\n    client =",
+          "committed_token_id": 1758,
+          "violating_token_id": 7388,
+          "committed_token_form": " httpx",
+          "violating_token_form": " requests",
+          "committed_token_sequence": [
+            1758,
+            87
+          ],
+          "violating_token_sequence": [
+            7388
+          ],
+          "clean_sequence_tokens": 314,
+          "corrupt_sequence_tokens": 1539,
+          "rule_token_count": 18,
+          "violating_occurrences": 12,
+          "clean_margin": 10.5,
+          "corrupt_margin": 1.125,
+          "clean_rule_attention_mass": 0.07124690167032756,
+          "corrupt_rule_attention_mass": 0.024253131176989812,
+          "natural_rule_attention_drop": 0.04699377049333775,
+          "clean_corrupt_rule_pattern_mae": 0.002776825140104987,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 5.0,
+              "desired_attention_mass": 0.07124690167032756,
+              "achieved_attention_mass": 0.07043685155132642,
+              "pattern_mae": 0.0011064288662684984,
+              "mass_mae": 0.014610709830706652,
+              "mean_abs_logit_delta": 1.2629432678222656,
+              "max_abs_logit_delta": 10.656747817993164,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 4.5,
+              "desired_attention_mass": 0.07124690167032756,
+              "achieved_attention_mass": 0.0609592071089607,
+              "pattern_mae": 0.000948321408661566,
+              "mass_mae": 0.01363538474498245,
+              "mean_abs_logit_delta": 2.910750389099121,
+              "max_abs_logit_delta": 14.941398620605469,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 1.25,
+              "desired_attention_mass": 0.07124690167032756,
+              "achieved_attention_mass": 0.061149520763697535,
+              "pattern_mae": 0.0013375096304326479,
+              "mass_mae": 0.015994504609037764,
+              "mean_abs_logit_delta": 3.9727556705474854,
+              "max_abs_logit_delta": 17.75483512878418,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 0.5,
+              "desired_attention_mass": 0.07124690167032756,
+              "achieved_attention_mass": 0.06544196920899245,
+              "pattern_mae": 0.0010285235319035845,
+              "mass_mae": 0.014805793762207031,
+              "mean_abs_logit_delta": 2.746997356414795,
+              "max_abs_logit_delta": 15.574581146240234,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 1.125,
+              "desired_attention_mass": 0.024253131176989812,
+              "achieved_attention_mass": 0.024253131176989812,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 3,
+          "task": "Create a health_check() function that hits /api/health and returns status.",
+          "forced_prefix": "\n\n```python\n    resp = await",
+          "committed_token_id": 1758,
+          "violating_token_id": 7388,
+          "committed_token_form": " httpx",
+          "violating_token_form": " requests",
+          "committed_token_sequence": [
+            1758,
+            87
+          ],
+          "violating_token_sequence": [
+            7388
+          ],
+          "clean_sequence_tokens": 309,
+          "corrupt_sequence_tokens": 1534,
+          "rule_token_count": 18,
+          "violating_occurrences": 12,
+          "clean_margin": 8.125,
+          "corrupt_margin": 3.25,
+          "clean_rule_attention_mass": 0.06550958569949636,
+          "corrupt_rule_attention_mass": 0.02061149374080392,
+          "natural_rule_attention_drop": 0.04489809195869244,
+          "clean_corrupt_rule_pattern_mae": 0.0025779368678251137,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 4.0,
+              "desired_attention_mass": 0.06550958569949636,
+              "achieved_attention_mass": 0.06644565468797317,
+              "pattern_mae": 0.0005710711526402379,
+              "mass_mae": 0.007109648154045527,
+              "mean_abs_logit_delta": 1.327500820159912,
+              "max_abs_logit_delta": 10.537484169006348,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 2.25,
+              "desired_attention_mass": 0.06550958569949636,
+              "achieved_attention_mass": 0.0633004205301404,
+              "pattern_mae": 0.000977805737210684,
+              "mass_mae": 0.013620055786584718,
+              "mean_abs_logit_delta": 2.926082134246826,
+              "max_abs_logit_delta": 14.025291442871094,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 1.75,
+              "desired_attention_mass": 0.06550958569949636,
+              "achieved_attention_mass": 0.06678144350791207,
+              "pattern_mae": 0.0008119438042950395,
+              "mass_mae": 0.009887412349389006,
+              "mean_abs_logit_delta": 4.148489475250244,
+              "max_abs_logit_delta": 16.264179229736328,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 1.875,
+              "desired_attention_mass": 0.06550958569949636,
+              "achieved_attention_mass": 0.07955035302214898,
+              "pattern_mae": 0.0012872259803771158,
+              "mass_mae": 0.018361160320077594,
+              "mean_abs_logit_delta": 2.9698235988616943,
+              "max_abs_logit_delta": 15.880136489868164,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 3.25,
+              "desired_attention_mass": 0.02061149374080392,
+              "achieved_attention_mass": 0.02061149374080392,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 4,
+          "task": "Implement send_notification(user_id, message) that POSTs to /api/notify.",
+          "forced_prefix": "\n\n```python\nasync def fetch_data(url: str):\n    response = await",
+          "committed_token_id": 1758,
+          "violating_token_id": 7388,
+          "committed_token_form": " httpx",
+          "violating_token_form": " requests",
+          "committed_token_sequence": [
+            1758,
+            87
+          ],
+          "violating_token_sequence": [
+            7388
+          ],
+          "clean_sequence_tokens": 318,
+          "corrupt_sequence_tokens": 1543,
+          "rule_token_count": 18,
+          "violating_occurrences": 12,
+          "clean_margin": 5.75,
+          "corrupt_margin": 0.125,
+          "clean_rule_attention_mass": 0.058100616523566156,
+          "corrupt_rule_attention_mass": 0.020944691478059843,
+          "natural_rule_attention_drop": 0.03715592504550631,
+          "clean_corrupt_rule_pattern_mae": 0.0021632516033535535,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 2.0,
+              "desired_attention_mass": 0.058100616523566156,
+              "achieved_attention_mass": 0.05544248022712194,
+              "pattern_mae": 0.0004068787224801221,
+              "mass_mae": 0.0060286335042642,
+              "mean_abs_logit_delta": 1.2576383352279663,
+              "max_abs_logit_delta": 11.05385971069336,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 2.0,
+              "desired_attention_mass": 0.058100616523566156,
+              "achieved_attention_mass": 0.04854446151652015,
+              "pattern_mae": 0.0007683876440121542,
+              "mass_mae": 0.011561014210411277,
+              "mean_abs_logit_delta": 3.1902339458465576,
+              "max_abs_logit_delta": 15.021406173706055,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -1.25,
+              "desired_attention_mass": 0.058100616523566156,
+              "achieved_attention_mass": 0.05863910533774357,
+              "pattern_mae": 0.0008453997677581635,
+              "mass_mae": 0.010404973118476426,
+              "mean_abs_logit_delta": 3.736802101135254,
+              "max_abs_logit_delta": 15.075592994689941,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -0.875,
+              "desired_attention_mass": 0.058100616523566156,
+              "achieved_attention_mass": 0.06589335020488271,
+              "pattern_mae": 0.0009024036925648733,
+              "mass_mae": 0.011893690312997652,
+              "mean_abs_logit_delta": 3.137305736541748,
+              "max_abs_logit_delta": 14.442774772644043,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 0.125,
+              "desired_attention_mass": 0.020944691478059843,
+              "achieved_attention_mass": 0.020944691478059843,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 5,
+          "task": "Implement send_notification(user_id, message) that POSTs to /api/notify.",
+          "forced_prefix": "\n\n```python\n    resp = await",
+          "committed_token_id": 1758,
+          "violating_token_id": 7388,
+          "committed_token_form": " httpx",
+          "violating_token_form": " requests",
+          "committed_token_sequence": [
+            1758,
+            87
+          ],
+          "violating_token_sequence": [
+            7388
+          ],
+          "clean_sequence_tokens": 310,
+          "corrupt_sequence_tokens": 1535,
+          "rule_token_count": 18,
+          "violating_occurrences": 12,
+          "clean_margin": 6.375,
+          "corrupt_margin": 0.625,
+          "clean_rule_attention_mass": 0.050581251485989645,
+          "corrupt_rule_attention_mass": 0.00950541035630382,
+          "natural_rule_attention_drop": 0.041075841129685826,
+          "clean_corrupt_rule_pattern_mae": 0.0023360273670942453,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 2.5,
+              "desired_attention_mass": 0.050581251485989645,
+              "achieved_attention_mass": 0.04899295362142416,
+              "pattern_mae": 0.0008196596444087425,
+              "mass_mae": 0.013919590627595495,
+              "mean_abs_logit_delta": 1.506453514099121,
+              "max_abs_logit_delta": 11.101836204528809,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": -0.125,
+              "desired_attention_mass": 0.050581251485989645,
+              "achieved_attention_mass": 0.05512807700926295,
+              "pattern_mae": 0.0013376599729851407,
+              "mass_mae": 0.02016344009294139,
+              "mean_abs_logit_delta": 2.892167806625366,
+              "max_abs_logit_delta": 13.919940948486328,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -0.25,
+              "desired_attention_mass": 0.050581251485989645,
+              "achieved_attention_mass": 0.04561436050929702,
+              "pattern_mae": 0.0007414272961166437,
+              "mass_mae": 0.011570000538295763,
+              "mean_abs_logit_delta": 3.687081813812256,
+              "max_abs_logit_delta": 16.569669723510742,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 0.25,
+              "desired_attention_mass": 0.050581251485989645,
+              "achieved_attention_mass": 0.05822059959889604,
+              "pattern_mae": 0.0009800588063976297,
+              "mass_mae": 0.015413845720803902,
+              "mean_abs_logit_delta": 2.62796950340271,
+              "max_abs_logit_delta": 14.024480819702148,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 0.625,
+              "desired_attention_mass": 0.00950541035630382,
+              "achieved_attention_mass": 0.00950541035630382,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 6,
+          "task": "Add get_config() that fetches remote config from /api/config endpoint.",
+          "forced_prefix": "\n\n```python\nasync def fetch_data(url: str):\n    response = await",
+          "committed_token_id": 1758,
+          "violating_token_id": 7388,
+          "committed_token_form": " httpx",
+          "violating_token_form": " requests",
+          "committed_token_sequence": [
+            1758,
+            87
+          ],
+          "violating_token_sequence": [
+            7388
+          ],
+          "clean_sequence_tokens": 316,
+          "corrupt_sequence_tokens": 1541,
+          "rule_token_count": 18,
+          "violating_occurrences": 12,
+          "clean_margin": 7.875,
+          "corrupt_margin": 3.375,
+          "clean_rule_attention_mass": 0.07854682088901217,
+          "corrupt_rule_attention_mass": 0.030911062056055434,
+          "natural_rule_attention_drop": 0.04763575883295674,
+          "clean_corrupt_rule_pattern_mae": 0.0027948141841289517,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 5.0,
+              "desired_attention_mass": 0.07854682088901217,
+              "achieved_attention_mass": 0.07237161455962521,
+              "pattern_mae": 0.0005922164124548055,
+              "mass_mae": 0.008492353847171986,
+              "mean_abs_logit_delta": 1.3501771688461304,
+              "max_abs_logit_delta": 11.616913795471191,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 3.875,
+              "desired_attention_mass": 0.07854682088901217,
+              "achieved_attention_mass": 0.05833841093744223,
+              "pattern_mae": 0.0013099139278682952,
+              "mass_mae": 0.022094087896850675,
+              "mean_abs_logit_delta": 3.2784740924835205,
+              "max_abs_logit_delta": 16.029314041137695,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 1.875,
+              "desired_attention_mass": 0.07854682088901217,
+              "achieved_attention_mass": 0.06753174061528765,
+              "pattern_mae": 0.0013700766881251743,
+              "mass_mae": 0.018826315324986354,
+              "mean_abs_logit_delta": 4.142218112945557,
+              "max_abs_logit_delta": 15.670409202575684,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 2.125,
+              "desired_attention_mass": 0.07854682088901217,
+              "achieved_attention_mass": 0.07988137085563861,
+              "pattern_mae": 0.0010601070417368857,
+              "mass_mae": 0.013283009123719798,
+              "mean_abs_logit_delta": 3.2207558155059814,
+              "max_abs_logit_delta": 15.06497859954834,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 3.375,
+              "desired_attention_mass": 0.030911062056055434,
+              "achieved_attention_mass": 0.030911062056055434,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 7,
+          "task": "Add get_config() that fetches remote config from /api/config endpoint.",
+          "forced_prefix": "\n\n```python\n    client =",
+          "committed_token_id": 1758,
+          "violating_token_id": 7388,
+          "committed_token_form": " httpx",
+          "violating_token_form": " requests",
+          "committed_token_sequence": [
+            1758,
+            87
+          ],
+          "violating_token_sequence": [
+            7388
+          ],
+          "clean_sequence_tokens": 307,
+          "corrupt_sequence_tokens": 1532,
+          "rule_token_count": 18,
+          "violating_occurrences": 12,
+          "clean_margin": 11.875,
+          "corrupt_margin": 4.5,
+          "clean_rule_attention_mass": 0.09284468761716898,
+          "corrupt_rule_attention_mass": 0.035433679102705076,
+          "natural_rule_attention_drop": 0.0574110085144639,
+          "clean_corrupt_rule_pattern_mae": 0.003435724269365892,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 6.5,
+              "desired_attention_mass": 0.09284468761716898,
+              "achieved_attention_mass": 0.08430031636873117,
+              "pattern_mae": 0.0009857256721331326,
+              "mass_mae": 0.014863527046355348,
+              "mean_abs_logit_delta": 1.2737454175949097,
+              "max_abs_logit_delta": 10.417570114135742,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 6.375,
+              "desired_attention_mass": 0.09284468761716898,
+              "achieved_attention_mass": 0.08956407340100178,
+              "pattern_mae": 0.0012407143809608757,
+              "mass_mae": 0.017666884111419607,
+              "mean_abs_logit_delta": 3.0110771656036377,
+              "max_abs_logit_delta": 15.525628089904785,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 3.625,
+              "desired_attention_mass": 0.09284468761716898,
+              "achieved_attention_mass": 0.10612453731636588,
+              "pattern_mae": 0.001990349658836539,
+              "mass_mae": 0.02690888046121332,
+              "mean_abs_logit_delta": 4.542042255401611,
+              "max_abs_logit_delta": 20.0,
+              "calibration_steps": 3,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 3.5,
+              "desired_attention_mass": 0.09284468761716898,
+              "achieved_attention_mass": 0.07649292481633332,
+              "pattern_mae": 0.0013688577097267485,
+              "mass_mae": 0.021859628018529084,
+              "mean_abs_logit_delta": 2.7654380798339844,
+              "max_abs_logit_delta": 16.014339447021484,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 4.5,
+              "desired_attention_mass": 0.035433679102705076,
+              "achieved_attention_mass": 0.035433679102705076,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 8,
+          "task": "Add a function fetch_user_profile(user_id) that calls the /api/users/{user_id} endpoint and returns the JSON response. Follow existing patterns.",
+          "forced_prefix": "\n\n```python\n    resp = await",
+          "committed_token_id": 1758,
+          "violating_token_id": 7388,
+          "committed_token_form": " httpx",
+          "violating_token_form": " requests",
+          "committed_token_sequence": [
+            1758,
+            87
+          ],
+          "violating_token_sequence": [
+            7388
+          ],
+          "clean_sequence_tokens": 323,
+          "corrupt_sequence_tokens": 1548,
+          "rule_token_count": 18,
+          "violating_occurrences": 12,
+          "clean_margin": 6.25,
+          "corrupt_margin": 0.75,
+          "clean_rule_attention_mass": 0.05294979342187826,
+          "corrupt_rule_attention_mass": 0.01689189600829895,
+          "natural_rule_attention_drop": 0.036057897413579315,
+          "clean_corrupt_rule_pattern_mae": 0.002095645071956544,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 1.625,
+              "desired_attention_mass": 0.05294979342187826,
+              "achieved_attention_mass": 0.05294489136968668,
+              "pattern_mae": 0.0004892325421748795,
+              "mass_mae": 0.006850545527973177,
+              "mean_abs_logit_delta": 1.2973047494888306,
+              "max_abs_logit_delta": 11.740580558776855,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 0.75,
+              "desired_attention_mass": 0.05294979342187826,
+              "achieved_attention_mass": 0.05371525471743483,
+              "pattern_mae": 0.0008152672914827865,
+              "mass_mae": 0.01114475545406234,
+              "mean_abs_logit_delta": 2.990226984024048,
+              "max_abs_logit_delta": 12.646272659301758,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -0.875,
+              "desired_attention_mass": 0.05294979342187826,
+              "achieved_attention_mass": 0.04998592516550651,
+              "pattern_mae": 0.0006663605345588272,
+              "mass_mae": 0.009115964656722588,
+              "mean_abs_logit_delta": 4.121487617492676,
+              "max_abs_logit_delta": 13.971253395080566,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 0.375,
+              "desired_attention_mass": 0.05294979342187826,
+              "achieved_attention_mass": 0.060654630669607565,
+              "pattern_mae": 0.0009791179326244814,
+              "mass_mae": 0.014671010730615728,
+              "mean_abs_logit_delta": 2.862360715866089,
+              "max_abs_logit_delta": 13.985489845275879,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 0.75,
+              "desired_attention_mass": 0.01689189600829895,
+              "achieved_attention_mass": 0.01689189600829895,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 9,
+          "task": "Write get_orders(customer_id, page) that fetches /api/orders with pagination. Follow the code style.",
+          "forced_prefix": "\n\n```python\nasync def fetch_data(url: str):\n    response = await",
+          "committed_token_id": 1758,
+          "violating_token_id": 7388,
+          "committed_token_form": " httpx",
+          "violating_token_form": " requests",
+          "committed_token_sequence": [
+            1758,
+            87
+          ],
+          "violating_token_sequence": [
+            7388
+          ],
+          "clean_sequence_tokens": 323,
+          "corrupt_sequence_tokens": 1548,
+          "rule_token_count": 18,
+          "violating_occurrences": 12,
+          "clean_margin": 7.5,
+          "corrupt_margin": 0.625,
+          "clean_rule_attention_mass": 0.07216058270289348,
+          "corrupt_rule_attention_mass": 0.023157104993095763,
+          "natural_rule_attention_drop": 0.04900347770979772,
+          "clean_corrupt_rule_pattern_mae": 0.0028211235946330885,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 3.25,
+              "desired_attention_mass": 0.07216058270289348,
+              "achieved_attention_mass": 0.07035750279632899,
+              "pattern_mae": 0.0005797536279994977,
+              "mass_mae": 0.00762100894532453,
+              "mean_abs_logit_delta": 1.3772075176239014,
+              "max_abs_logit_delta": 11.805652618408203,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 3.875,
+              "desired_attention_mass": 0.07216058270289348,
+              "achieved_attention_mass": 0.04889462827346646,
+              "pattern_mae": 0.001437894129104769,
+              "mass_mae": 0.024549801133196943,
+              "mean_abs_logit_delta": 3.3336124420166016,
+              "max_abs_logit_delta": 15.49292278289795,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -1.25,
+              "desired_attention_mass": 0.07216058270289348,
+              "achieved_attention_mass": 0.05337623381414092,
+              "pattern_mae": 0.0017576861359534983,
+              "mass_mae": 0.02324832324162484,
+              "mean_abs_logit_delta": 3.9691829681396484,
+              "max_abs_logit_delta": 18.85915184020996,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -0.125,
+              "desired_attention_mass": 0.07216058270289348,
+              "achieved_attention_mass": 0.06887066958901975,
+              "pattern_mae": 0.0009358283336601184,
+              "mass_mae": 0.013469784104157813,
+              "mean_abs_logit_delta": 3.341153621673584,
+              "max_abs_logit_delta": 15.54614543914795,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 0.625,
+              "desired_attention_mass": 0.023157104993095763,
+              "achieved_attention_mass": 0.023157104993095763,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 10,
+          "task": "Add a function fetch_user_profile(user_id) that calls the /api/users/{user_id} endpoint and returns the JSON response. Follow existing patterns.",
+          "forced_prefix": "\n\n```python\n    client =",
+          "committed_token_id": 1758,
+          "violating_token_id": 7388,
+          "committed_token_form": " httpx",
+          "violating_token_form": " requests",
+          "committed_token_sequence": [
+            1758,
+            87
+          ],
+          "violating_token_sequence": [
+            7388
+          ],
+          "clean_sequence_tokens": 322,
+          "corrupt_sequence_tokens": 1547,
+          "rule_token_count": 18,
+          "violating_occurrences": 12,
+          "clean_margin": 10.3125,
+          "corrupt_margin": -2.25,
+          "clean_rule_attention_mass": 0.08483912559369436,
+          "corrupt_rule_attention_mass": 0.02039421435732108,
+          "natural_rule_attention_drop": 0.06444491123637328,
+          "clean_corrupt_rule_pattern_mae": 0.0037189815641165925,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 4.125,
+              "desired_attention_mass": 0.08483912559369436,
+              "achieved_attention_mass": 0.08922193163576034,
+              "pattern_mae": 0.001336987149653186,
+              "mass_mae": 0.018402421083569955,
+              "mean_abs_logit_delta": 1.5036357641220093,
+              "max_abs_logit_delta": 10.301568031311035,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 2.125,
+              "desired_attention_mass": 0.08483912559369436,
+              "achieved_attention_mass": 0.08006182398933631,
+              "pattern_mae": 0.0010116132373066368,
+              "mass_mae": 0.012812591422026834,
+              "mean_abs_logit_delta": 3.061586856842041,
+              "max_abs_logit_delta": 15.280101776123047,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -1.625,
+              "desired_attention_mass": 0.08483912559369436,
+              "achieved_attention_mass": 0.06532497417468291,
+              "pattern_mae": 0.0016629285955087442,
+              "mass_mae": 0.02407178009609477,
+              "mean_abs_logit_delta": 4.372152805328369,
+              "max_abs_logit_delta": 16.024351119995117,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -1.5,
+              "desired_attention_mass": 0.08483912559369436,
+              "achieved_attention_mass": 0.07676400179759814,
+              "pattern_mae": 0.0014486951064240062,
+              "mass_mae": 0.020015018716758978,
+              "mean_abs_logit_delta": 2.9123988151550293,
+              "max_abs_logit_delta": 15.199418067932129,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -2.25,
+              "desired_attention_mass": 0.02039421435732108,
+              "achieved_attention_mass": 0.02039421435732108,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 11,
+          "task": "Add get_config() that fetches remote config from /api/config endpoint.",
+          "forced_prefix": "\n\n```python\n    resp = await",
+          "committed_token_id": 1758,
+          "violating_token_id": 7388,
+          "committed_token_form": " httpx",
+          "violating_token_form": " requests",
+          "committed_token_sequence": [
+            1758,
+            87
+          ],
+          "violating_token_sequence": [
+            7388
+          ],
+          "clean_sequence_tokens": 308,
+          "corrupt_sequence_tokens": 1533,
+          "rule_token_count": 18,
+          "violating_occurrences": 12,
+          "clean_margin": 7.125,
+          "corrupt_margin": 4.0,
+          "clean_rule_attention_mass": 0.055227996315807104,
+          "corrupt_rule_attention_mass": 0.020390718351476468,
+          "natural_rule_attention_drop": 0.034837277964330636,
+          "clean_corrupt_rule_pattern_mae": 0.00206009502737568,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 4.625,
+              "desired_attention_mass": 0.055227996315807104,
+              "achieved_attention_mass": 0.05262623315390486,
+              "pattern_mae": 0.0003378030525289852,
+              "mass_mae": 0.005161982247955166,
+              "mean_abs_logit_delta": 1.2711235284805298,
+              "max_abs_logit_delta": 9.512149810791016,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 2.5,
+              "desired_attention_mass": 0.055227996315807104,
+              "achieved_attention_mass": 0.056881818132331737,
+              "pattern_mae": 0.0006562257767654955,
+              "mass_mae": 0.008930109421131559,
+              "mean_abs_logit_delta": 2.9353060722351074,
+              "max_abs_logit_delta": 14.34384536743164,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 2.875,
+              "desired_attention_mass": 0.055227996315807104,
+              "achieved_attention_mass": 0.05189795985531349,
+              "pattern_mae": 0.0008740192605938108,
+              "mass_mae": 0.00968908642020184,
+              "mean_abs_logit_delta": 4.080328941345215,
+              "max_abs_logit_delta": 16.096328735351562,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 3.375,
+              "desired_attention_mass": 0.055227996315807104,
+              "achieved_attention_mass": 0.05952040023671893,
+              "pattern_mae": 0.0006398819431734199,
+              "mass_mae": 0.008896875533257397,
+              "mean_abs_logit_delta": 2.838413715362549,
+              "max_abs_logit_delta": 15.944082260131836,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 4.0,
+              "desired_attention_mass": 0.020390718351476468,
+              "achieved_attention_mass": 0.020390718351476468,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 12,
+          "task": "Implement send_notification(user_id, message) that POSTs to /api/notify.",
+          "forced_prefix": "\n\n```python\n    client =",
+          "committed_token_id": 1758,
+          "violating_token_id": 7388,
+          "committed_token_form": " httpx",
+          "violating_token_form": " requests",
+          "committed_token_sequence": [
+            1758,
+            87
+          ],
+          "violating_token_sequence": [
+            7388
+          ],
+          "clean_sequence_tokens": 309,
+          "corrupt_sequence_tokens": 1534,
+          "rule_token_count": 18,
+          "violating_occurrences": 12,
+          "clean_margin": 9.4375,
+          "corrupt_margin": -0.625,
+          "clean_rule_attention_mass": 0.07226464030547784,
+          "corrupt_rule_attention_mass": 0.01127992975167357,
+          "natural_rule_attention_drop": 0.06098471055380427,
+          "clean_corrupt_rule_pattern_mae": 0.0034953175300660613,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 4.6875,
+              "desired_attention_mass": 0.07226464030547784,
+              "achieved_attention_mass": 0.06961303146985862,
+              "pattern_mae": 0.001340091615789928,
+              "mass_mae": 0.020794437571357075,
+              "mean_abs_logit_delta": 1.608255386352539,
+              "max_abs_logit_delta": 10.577448844909668,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 1.8125,
+              "desired_attention_mass": 0.07226464030547784,
+              "achieved_attention_mass": 0.06642037221732047,
+              "pattern_mae": 0.001270805694030759,
+              "mass_mae": 0.01935250067169993,
+              "mean_abs_logit_delta": 2.9258315563201904,
+              "max_abs_logit_delta": 15.057806968688965,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 1.5,
+              "desired_attention_mass": 0.07226464030547784,
+              "achieved_attention_mass": 0.06607248326047109,
+              "pattern_mae": 0.0014842501689669846,
+              "mass_mae": 0.01995029479999525,
+              "mean_abs_logit_delta": 3.283324718475342,
+              "max_abs_logit_delta": 17.941564559936523,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -1.625,
+              "desired_attention_mass": 0.07226464030547784,
+              "achieved_attention_mass": 0.06373107590927528,
+              "pattern_mae": 0.0009518651246393207,
+              "mass_mae": 0.014374099751316512,
+              "mean_abs_logit_delta": 2.506078004837036,
+              "max_abs_logit_delta": 14.092875480651855,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -0.625,
+              "desired_attention_mass": 0.01127992975167357,
+              "achieved_attention_mass": 0.01127992975167357,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 13,
+          "task": "Write get_orders(customer_id, page) that fetches /api/orders with pagination. Follow the code style.",
+          "forced_prefix": "\n\n```python\n    resp = await",
+          "committed_token_id": 1758,
+          "violating_token_id": 7388,
+          "committed_token_form": " httpx",
+          "violating_token_form": " requests",
+          "committed_token_sequence": [
+            1758,
+            87
+          ],
+          "violating_token_sequence": [
+            7388
+          ],
+          "clean_sequence_tokens": 315,
+          "corrupt_sequence_tokens": 1540,
+          "rule_token_count": 18,
+          "violating_occurrences": 12,
+          "clean_margin": 6.0,
+          "corrupt_margin": 2.5,
+          "clean_rule_attention_mass": 0.04565026378259063,
+          "corrupt_rule_attention_mass": 0.012176954420283437,
+          "natural_rule_attention_drop": 0.03347330936230719,
+          "clean_corrupt_rule_pattern_mae": 0.0019040605436132934,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 3.625,
+              "desired_attention_mass": 0.04565026378259063,
+              "achieved_attention_mass": 0.04673390645677081,
+              "pattern_mae": 0.0004719770618416638,
+              "mass_mae": 0.007097011885399787,
+              "mean_abs_logit_delta": 1.389193058013916,
+              "max_abs_logit_delta": 9.62930679321289,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 1.75,
+              "desired_attention_mass": 0.04565026378259063,
+              "achieved_attention_mass": 0.0456189766812783,
+              "pattern_mae": 0.0007732766240363931,
+              "mass_mae": 0.012179900480147738,
+              "mean_abs_logit_delta": 2.9075777530670166,
+              "max_abs_logit_delta": 12.556914329528809,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 1.25,
+              "desired_attention_mass": 0.04565026378259063,
+              "achieved_attention_mass": 0.05503292729218419,
+              "pattern_mae": 0.000979870794393579,
+              "mass_mae": 0.013053805819184233,
+              "mean_abs_logit_delta": 3.858278751373291,
+              "max_abs_logit_delta": 16.185373306274414,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 1.625,
+              "desired_attention_mass": 0.04565026378259063,
+              "achieved_attention_mass": 0.04956653957756666,
+              "pattern_mae": 0.0006572411761785938,
+              "mass_mae": 0.010261777629029193,
+              "mean_abs_logit_delta": 2.7855942249298096,
+              "max_abs_logit_delta": 15.159754753112793,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 2.5,
+              "desired_attention_mass": 0.012176954420283437,
+              "achieved_attention_mass": 0.012176954420283437,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 14,
+          "task": "Add a function fetch_user_profile(user_id) that calls the /api/users/{user_id} endpoint and returns the JSON response. Follow existing patterns.",
+          "forced_prefix": "\n\n```python\nasync def fetch_data(url: str):\n    response = await",
+          "committed_token_id": 1758,
+          "violating_token_id": 7388,
+          "committed_token_form": " httpx",
+          "violating_token_form": " requests",
+          "committed_token_sequence": [
+            1758,
+            87
+          ],
+          "violating_token_sequence": [
+            7388
+          ],
+          "clean_sequence_tokens": 331,
+          "corrupt_sequence_tokens": 1556,
+          "rule_token_count": 18,
+          "violating_occurrences": 12,
+          "clean_margin": 6.625,
+          "corrupt_margin": 0.75,
+          "clean_rule_attention_mass": 0.0657327025412367,
+          "corrupt_rule_attention_mass": 0.022522593920047466,
+          "natural_rule_attention_drop": 0.043210108621189236,
+          "clean_corrupt_rule_pattern_mae": 0.0025265150873635253,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 2.0,
+              "desired_attention_mass": 0.0657327025412367,
+              "achieved_attention_mass": 0.06316508116343847,
+              "pattern_mae": 0.00048136848384344304,
+              "mass_mae": 0.006195914336086179,
+              "mean_abs_logit_delta": 1.3516077995300293,
+              "max_abs_logit_delta": 7.330413341522217,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 2.75,
+              "desired_attention_mass": 0.0657327025412367,
+              "achieved_attention_mass": 0.0507602716008058,
+              "pattern_mae": 0.0010567999502549914,
+              "mass_mae": 0.016536966090475638,
+              "mean_abs_logit_delta": 3.2691826820373535,
+              "max_abs_logit_delta": 15.367737770080566,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 0.75,
+              "desired_attention_mass": 0.0657327025412367,
+              "achieved_attention_mass": 0.05457596642036851,
+              "pattern_mae": 0.0008719414085694902,
+              "mass_mae": 0.013106953643728048,
+              "mean_abs_logit_delta": 4.596283435821533,
+              "max_abs_logit_delta": 15.81595230102539,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 0.125,
+              "desired_attention_mass": 0.0657327025412367,
+              "achieved_attention_mass": 0.06047637825115369,
+              "pattern_mae": 0.000858468073812009,
+              "mass_mae": 0.011982751598295111,
+              "mean_abs_logit_delta": 3.3828234672546387,
+              "max_abs_logit_delta": 14.830571174621582,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 0.75,
+              "desired_attention_mass": 0.022522593920047466,
+              "achieved_attention_mass": 0.022522593920047466,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "sql",
+      "label": "TypeScript / Data Pipeline",
+      "scenario_file": "scenario_sql_multi.jsonl",
+      "primary_constraint_id": "C1_orm",
+      "constraint": {
+        "id": "C1_orm",
+        "committed": "prisma",
+        "violating": "query",
+        "forced_prefixes": [
+          "\n\n```typescript\n  const result = await ",
+          "\n\n```typescript\n  return await ",
+          "\n\n```typescript\n  const data = await "
+        ]
+      },
+      "trial_grid": {
+        "configured_tasks": 5,
+        "configured_prefixes": 3,
+        "selected_pairs": 15
+      },
+      "summaries": {
+        "all_trials": {
+          "n": 15,
+          "clean": {
+            "n": 15,
+            "flip_rate": 1.0,
+            "mean_margin": 11.320833333333333
+          },
+          "corrupt": {
+            "n": 15,
+            "flip_rate": 0.8,
+            "mean_margin": 1.9041666666666666
+          },
+          "conditions": {
+            "constraint_restore": {
+              "n": 15,
+              "flip_rate": 1.0,
+              "mean_margin": 4.883333333333334
+            },
+            "rag_violation_restore": {
+              "n": 15,
+              "flip_rate": 1.0,
+              "mean_margin": 2.158333333333333
+            },
+            "rag_random_restore": {
+              "n": 15,
+              "flip_rate": 0.6666666666666666,
+              "mean_margin": 0.7333333333333333
+            },
+            "rag_recent_restore": {
+              "n": 15,
+              "flip_rate": 0.6,
+              "mean_margin": 0.8416666666666667
+            },
+            "constraint_identity": {
+              "n": 15,
+              "flip_rate": 0.8,
+              "mean_margin": 1.9041666666666666
+            }
+          },
+          "attention": {
+            "clean_rule_attention_mass": 0.07294826545298864,
+            "corrupt_rule_attention_mass": 0.009930756301857914,
+            "natural_rule_attention_drop": 0.06301750915113073,
+            "clean_corrupt_rule_pattern_mae": 0.0022148650329118264
+          },
+          "intervention_fidelity": {
+            "constraint_restore": {
+              "mean_pattern_mae": 0.0005724881339539513,
+              "max_pattern_mae": 0.0007393363731143137,
+              "convergence_rate": 1.0
+            },
+            "rag_violation_restore": {
+              "mean_pattern_mae": 0.0005783874210604923,
+              "max_pattern_mae": 0.0007743433349018092,
+              "convergence_rate": 1.0
+            },
+            "rag_random_restore": {
+              "mean_pattern_mae": 0.0006215659443347622,
+              "max_pattern_mae": 0.0009267017286709653,
+              "convergence_rate": 1.0
+            },
+            "rag_recent_restore": {
+              "mean_pattern_mae": 0.0011270878061389877,
+              "max_pattern_mae": 0.0015318322265766955,
+              "convergence_rate": 1.0
+            },
+            "constraint_identity": {
+              "mean_pattern_mae": 0.0,
+              "max_pattern_mae": 0.0,
+              "convergence_rate": 1.0
+            }
+          }
+        },
+        "override_eligible": {
+          "n": 15,
+          "clean": {
+            "n": 15,
+            "flip_rate": 1.0,
+            "mean_margin": 11.320833333333333
+          },
+          "corrupt": {
+            "n": 15,
+            "flip_rate": 0.8,
+            "mean_margin": 1.9041666666666666
+          },
+          "conditions": {
+            "constraint_restore": {
+              "n": 15,
+              "flip_rate": 1.0,
+              "mean_margin": 4.883333333333334
+            },
+            "rag_violation_restore": {
+              "n": 15,
+              "flip_rate": 1.0,
+              "mean_margin": 2.158333333333333
+            },
+            "rag_random_restore": {
+              "n": 15,
+              "flip_rate": 0.6666666666666666,
+              "mean_margin": 0.7333333333333333
+            },
+            "rag_recent_restore": {
+              "n": 15,
+              "flip_rate": 0.6,
+              "mean_margin": 0.8416666666666667
+            },
+            "constraint_identity": {
+              "n": 15,
+              "flip_rate": 0.8,
+              "mean_margin": 1.9041666666666666
+            }
+          },
+          "attention": {
+            "clean_rule_attention_mass": 0.07294826545298864,
+            "corrupt_rule_attention_mass": 0.009930756301857914,
+            "natural_rule_attention_drop": 0.06301750915113073,
+            "clean_corrupt_rule_pattern_mae": 0.0022148650329118264
+          },
+          "intervention_fidelity": {
+            "constraint_restore": {
+              "mean_pattern_mae": 0.0005724881339539513,
+              "max_pattern_mae": 0.0007393363731143137,
+              "convergence_rate": 1.0
+            },
+            "rag_violation_restore": {
+              "mean_pattern_mae": 0.0005783874210604923,
+              "max_pattern_mae": 0.0007743433349018092,
+              "convergence_rate": 1.0
+            },
+            "rag_random_restore": {
+              "mean_pattern_mae": 0.0006215659443347622,
+              "max_pattern_mae": 0.0009267017286709653,
+              "convergence_rate": 1.0
+            },
+            "rag_recent_restore": {
+              "mean_pattern_mae": 0.0011270878061389877,
+              "max_pattern_mae": 0.0015318322265766955,
+              "convergence_rate": 1.0
+            },
+            "constraint_identity": {
+              "mean_pattern_mae": 0.0,
+              "max_pattern_mae": 0.0,
+              "convergence_rate": 1.0
+            }
+          }
+        }
+      },
+      "trials": [
+        {
+          "index": 0,
+          "task": "Add a function getUserById(id) that fetches a user record from the database. Follow existing patterns.",
+          "forced_prefix": "\n\n```typescript\n  const result = await",
+          "committed_token_id": 548,
+          "violating_token_id": 3239,
+          "committed_token_form": " prisma",
+          "violating_token_form": " query",
+          "committed_token_sequence": [
+            548,
+            38152
+          ],
+          "violating_token_sequence": [
+            3239
+          ],
+          "clean_sequence_tokens": 354,
+          "corrupt_sequence_tokens": 1553,
+          "rule_token_count": 29,
+          "violating_occurrences": 12,
+          "clean_margin": 10.75,
+          "corrupt_margin": -1.0625,
+          "clean_rule_attention_mass": 0.08282995546379915,
+          "corrupt_rule_attention_mass": 0.01113402067970198,
+          "natural_rule_attention_drop": 0.07169593478409717,
+          "clean_corrupt_rule_pattern_mae": 0.002522649724806587,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 1.5,
+              "desired_attention_mass": 0.08282995546379915,
+              "achieved_attention_mass": 0.06716662258482896,
+              "pattern_mae": 0.0007103876631355468,
+              "mass_mae": 0.01854221727206515,
+              "mean_abs_logit_delta": 1.7987345457077026,
+              "max_abs_logit_delta": 10.40070915222168,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 0.25,
+              "desired_attention_mass": 0.08282995546379915,
+              "achieved_attention_mass": 0.06910661077843262,
+              "pattern_mae": 0.0006070171282492363,
+              "mass_mae": 0.01586580185371881,
+              "mean_abs_logit_delta": 2.3660385608673096,
+              "max_abs_logit_delta": 15.356401443481445,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -2.6875,
+              "desired_attention_mass": 0.08282995546379915,
+              "achieved_attention_mass": 0.06410584025658093,
+              "pattern_mae": 0.0009046577019594574,
+              "mass_mae": 0.020077894813416954,
+              "mean_abs_logit_delta": 3.7039010524749756,
+              "max_abs_logit_delta": 19.010881423950195,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -2.5,
+              "desired_attention_mass": 0.08282995546379915,
+              "achieved_attention_mass": 0.04881936469330238,
+              "pattern_mae": 0.0013519313046204983,
+              "mass_mae": 0.03798754694155203,
+              "mean_abs_logit_delta": 3.4398248195648193,
+              "max_abs_logit_delta": 19.01266860961914,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -1.0625,
+              "desired_attention_mass": 0.01113402067970198,
+              "achieved_attention_mass": 0.01113402067970198,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 1,
+          "task": "Implement deleteExpiredSessions() that removes sessions older than 30 days.",
+          "forced_prefix": "\n\n```typescript\n  const data = await",
+          "committed_token_id": 548,
+          "violating_token_id": 3239,
+          "committed_token_form": " prisma",
+          "violating_token_form": " query",
+          "committed_token_sequence": [
+            548,
+            38152
+          ],
+          "violating_token_sequence": [
+            3239
+          ],
+          "clean_sequence_tokens": 348,
+          "corrupt_sequence_tokens": 1547,
+          "rule_token_count": 29,
+          "violating_occurrences": 12,
+          "clean_margin": 11.5625,
+          "corrupt_margin": 3.125,
+          "clean_rule_attention_mass": 0.06183090161245603,
+          "corrupt_rule_attention_mass": 0.010179911364013186,
+          "natural_rule_attention_drop": 0.051650990248442843,
+          "clean_corrupt_rule_pattern_mae": 0.001825073100357818,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 5.4375,
+              "desired_attention_mass": 0.06183090161245603,
+              "achieved_attention_mass": 0.05440744678848065,
+              "pattern_mae": 0.0004327521726456605,
+              "mass_mae": 0.011109516020112026,
+              "mean_abs_logit_delta": 1.709630012512207,
+              "max_abs_logit_delta": 8.61047649383545,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 3.625,
+              "desired_attention_mass": 0.06183090161245603,
+              "achieved_attention_mass": 0.05086220213426994,
+              "pattern_mae": 0.0004463124315197302,
+              "mass_mae": 0.01197871878684964,
+              "mean_abs_logit_delta": 2.4023945331573486,
+              "max_abs_logit_delta": 12.815566062927246,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 2.875,
+              "desired_attention_mass": 0.06183090161245603,
+              "achieved_attention_mass": 0.053667591096690066,
+              "pattern_mae": 0.0005186463198557389,
+              "mass_mae": 0.01162879623790594,
+              "mean_abs_logit_delta": 3.007510185241699,
+              "max_abs_logit_delta": 14.963057518005371,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 2.5625,
+              "desired_attention_mass": 0.06183090161245603,
+              "achieved_attention_mass": 0.04285293043806003,
+              "pattern_mae": 0.0008245206705536335,
+              "mass_mae": 0.0229427185773742,
+              "mean_abs_logit_delta": 2.994561195373535,
+              "max_abs_logit_delta": 17.61061668395996,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 3.125,
+              "desired_attention_mass": 0.010179911364013186,
+              "achieved_attention_mass": 0.010179911364013186,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 2,
+          "task": "Write createOrder(data) that inserts a new order. Follow the existing code style.",
+          "forced_prefix": "\n\n```typescript\n  const data = await",
+          "committed_token_id": 548,
+          "violating_token_id": 3239,
+          "committed_token_form": " prisma",
+          "violating_token_form": " query",
+          "committed_token_sequence": [
+            548,
+            38152
+          ],
+          "violating_token_sequence": [
+            3239
+          ],
+          "clean_sequence_tokens": 350,
+          "corrupt_sequence_tokens": 1549,
+          "rule_token_count": 29,
+          "violating_occurrences": 12,
+          "clean_margin": 8.5625,
+          "corrupt_margin": 4.3125,
+          "clean_rule_attention_mass": 0.06538829744721834,
+          "corrupt_rule_attention_mass": 0.006229987170977088,
+          "natural_rule_attention_drop": 0.05915831027624126,
+          "clean_corrupt_rule_pattern_mae": 0.0020650006615771698,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 8.25,
+              "desired_attention_mass": 0.06538829744721834,
+              "achieved_attention_mass": 0.06065650133845898,
+              "pattern_mae": 0.0005605063452094328,
+              "mass_mae": 0.013922413196549034,
+              "mean_abs_logit_delta": 2.116093158721924,
+              "max_abs_logit_delta": 9.079546928405762,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 3.875,
+              "desired_attention_mass": 0.06538829744721834,
+              "achieved_attention_mass": 0.05597750147661337,
+              "pattern_mae": 0.0005051895554620737,
+              "mass_mae": 0.012975653561835106,
+              "mean_abs_logit_delta": 2.4339282512664795,
+              "max_abs_logit_delta": 13.615647315979004,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 2.5,
+              "desired_attention_mass": 0.06538829744721834,
+              "achieved_attention_mass": 0.06058759056031704,
+              "pattern_mae": 0.0005174403072137815,
+              "mass_mae": 0.012285553137189709,
+              "mean_abs_logit_delta": 3.268326997756958,
+              "max_abs_logit_delta": 15.580795288085938,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 3.4375,
+              "desired_attention_mass": 0.06538829744721834,
+              "achieved_attention_mass": 0.05123862359099663,
+              "pattern_mae": 0.0009332031222584192,
+              "mass_mae": 0.024994828190896302,
+              "mean_abs_logit_delta": 3.120453357696533,
+              "max_abs_logit_delta": 18.104875564575195,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 4.3125,
+              "desired_attention_mass": 0.006229987170977088,
+              "achieved_attention_mass": 0.006229987170977088,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 3,
+          "task": "Create findProductsByCategory(category) that queries products. Follow patterns.",
+          "forced_prefix": "\n\n```typescript\n  const data = await",
+          "committed_token_id": 548,
+          "violating_token_id": 3239,
+          "committed_token_form": " prisma",
+          "violating_token_form": " query",
+          "committed_token_sequence": [
+            548,
+            38152
+          ],
+          "violating_token_sequence": [
+            3239
+          ],
+          "clean_sequence_tokens": 347,
+          "corrupt_sequence_tokens": 1546,
+          "rule_token_count": 29,
+          "violating_occurrences": 12,
+          "clean_margin": 9.75,
+          "corrupt_margin": 1.625,
+          "clean_rule_attention_mass": 0.06695432817706695,
+          "corrupt_rule_attention_mass": 0.012202979969935348,
+          "natural_rule_attention_drop": 0.0547513482071316,
+          "clean_corrupt_rule_pattern_mae": 0.0019223231446141233,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 3.75,
+              "desired_attention_mass": 0.06695432817706695,
+              "achieved_attention_mass": 0.05895904573396994,
+              "pattern_mae": 0.0004472209717417942,
+              "mass_mae": 0.011433598651470115,
+              "mean_abs_logit_delta": 1.7136681079864502,
+              "max_abs_logit_delta": 8.084759712219238,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 2.25,
+              "desired_attention_mass": 0.06695432817706695,
+              "achieved_attention_mass": 0.05860867616362297,
+              "pattern_mae": 0.00046693897666745423,
+              "mass_mae": 0.01195697348493223,
+              "mean_abs_logit_delta": 2.369784355163574,
+              "max_abs_logit_delta": 13.227639198303223,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 1.125,
+              "desired_attention_mass": 0.06695432817706695,
+              "achieved_attention_mass": 0.06532911354532608,
+              "pattern_mae": 0.00046057086896885617,
+              "mass_mae": 0.010023944216440074,
+              "mean_abs_logit_delta": 3.4386088848114014,
+              "max_abs_logit_delta": 16.618993759155273,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 1.0,
+              "desired_attention_mass": 0.06695432817706695,
+              "achieved_attention_mass": 0.04943465190724684,
+              "pattern_mae": 0.0008444326432744184,
+              "mass_mae": 0.02329353687729543,
+              "mean_abs_logit_delta": 2.887756109237671,
+              "max_abs_logit_delta": 18.657794952392578,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 1.625,
+              "desired_attention_mass": 0.012202979969935348,
+              "achieved_attention_mass": 0.012202979969935348,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 4,
+          "task": "Implement deleteExpiredSessions() that removes sessions older than 30 days.",
+          "forced_prefix": "\n\n```typescript\n  const result = await",
+          "committed_token_id": 548,
+          "violating_token_id": 3239,
+          "committed_token_form": " prisma",
+          "violating_token_form": " query",
+          "committed_token_sequence": [
+            548,
+            38152
+          ],
+          "violating_token_sequence": [
+            3239
+          ],
+          "clean_sequence_tokens": 348,
+          "corrupt_sequence_tokens": 1547,
+          "rule_token_count": 29,
+          "violating_occurrences": 12,
+          "clean_margin": 10.4375,
+          "corrupt_margin": -0.5,
+          "clean_rule_attention_mass": 0.06210784542445953,
+          "corrupt_rule_attention_mass": 0.008314677930544488,
+          "natural_rule_attention_drop": 0.053793167493915044,
+          "clean_corrupt_rule_pattern_mae": 0.0018900814331853045,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 3.75,
+              "desired_attention_mass": 0.06210784542445953,
+              "achieved_attention_mass": 0.05459085773103512,
+              "pattern_mae": 0.00040962964843716833,
+              "mass_mae": 0.010161612500758985,
+              "mean_abs_logit_delta": 1.7142943143844604,
+              "max_abs_logit_delta": 8.64852237701416,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 0.9375,
+              "desired_attention_mass": 0.06210784542445953,
+              "achieved_attention_mass": 0.04945649586331386,
+              "pattern_mae": 0.0005010930813463907,
+              "mass_mae": 0.013144480077943835,
+              "mean_abs_logit_delta": 2.493640422821045,
+              "max_abs_logit_delta": 14.112527847290039,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -2.125,
+              "desired_attention_mass": 0.06210784542445953,
+              "achieved_attention_mass": 0.052424752726577796,
+              "pattern_mae": 0.0004395993186895234,
+              "mass_mae": 0.011162558428343171,
+              "mean_abs_logit_delta": 3.0168423652648926,
+              "max_abs_logit_delta": 16.789962768554688,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -1.625,
+              "desired_attention_mass": 0.06210784542445953,
+              "achieved_attention_mass": 0.04762950195715977,
+              "pattern_mae": 0.0006678311605915391,
+              "mass_mae": 0.01854960757079355,
+              "mean_abs_logit_delta": 3.0571577548980713,
+              "max_abs_logit_delta": 17.834941864013672,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -0.5,
+              "desired_attention_mass": 0.008314677930544488,
+              "achieved_attention_mass": 0.008314677930544488,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 5,
+          "task": "Add updateUserEmail(userId, newEmail) that updates the user's email in the database.",
+          "forced_prefix": "\n\n```typescript\n  return await",
+          "committed_token_id": 548,
+          "violating_token_id": 3239,
+          "committed_token_form": " prisma",
+          "violating_token_form": " query",
+          "committed_token_sequence": [
+            548,
+            38152
+          ],
+          "violating_token_sequence": [
+            3239
+          ],
+          "clean_sequence_tokens": 349,
+          "corrupt_sequence_tokens": 1548,
+          "rule_token_count": 29,
+          "violating_occurrences": 12,
+          "clean_margin": 13.4375,
+          "corrupt_margin": 3.4375,
+          "clean_rule_attention_mass": 0.0772189673466178,
+          "corrupt_rule_attention_mass": 0.010722535089231454,
+          "natural_rule_attention_drop": 0.06649643225738636,
+          "clean_corrupt_rule_pattern_mae": 0.0023422284978620997,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 6.0625,
+              "desired_attention_mass": 0.0772189673466178,
+              "achieved_attention_mass": 0.06878070268206872,
+              "pattern_mae": 0.0005853409901856838,
+              "mass_mae": 0.015201134808683911,
+              "mean_abs_logit_delta": 1.7416911125183105,
+              "max_abs_logit_delta": 8.418258666992188,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 3.3125,
+              "desired_attention_mass": 0.0772189673466178,
+              "achieved_attention_mass": 0.0623996017070917,
+              "pattern_mae": 0.0006024306404959554,
+              "mass_mae": 0.015699522943647865,
+              "mean_abs_logit_delta": 2.3582093715667725,
+              "max_abs_logit_delta": 13.08170223236084,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 1.3125,
+              "desired_attention_mass": 0.0772189673466178,
+              "achieved_attention_mass": 0.07671263369803245,
+              "pattern_mae": 0.0005337045297962434,
+              "mass_mae": 0.01155761006521061,
+              "mean_abs_logit_delta": 3.1748812198638916,
+              "max_abs_logit_delta": 14.666093826293945,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 2.375,
+              "desired_attention_mass": 0.0772189673466178,
+              "achieved_attention_mass": 0.04789884538891224,
+              "pattern_mae": 0.0013514469404841433,
+              "mass_mae": 0.038465197039141245,
+              "mean_abs_logit_delta": 3.2163186073303223,
+              "max_abs_logit_delta": 18.43069076538086,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 3.4375,
+              "desired_attention_mass": 0.010722535089231454,
+              "achieved_attention_mass": 0.010722535089231454,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 6,
+          "task": "Create findProductsByCategory(category) that queries products. Follow patterns.",
+          "forced_prefix": "\n\n```typescript\n  return await",
+          "committed_token_id": 548,
+          "violating_token_id": 3239,
+          "committed_token_form": " prisma",
+          "violating_token_form": " query",
+          "committed_token_sequence": [
+            548,
+            38152
+          ],
+          "violating_token_sequence": [
+            3239
+          ],
+          "clean_sequence_tokens": 345,
+          "corrupt_sequence_tokens": 1544,
+          "rule_token_count": 29,
+          "violating_occurrences": 12,
+          "clean_margin": 11.5,
+          "corrupt_margin": 1.25,
+          "clean_rule_attention_mass": 0.07440669698497424,
+          "corrupt_rule_attention_mass": 0.010718498844653368,
+          "natural_rule_attention_drop": 0.06368819814032087,
+          "clean_corrupt_rule_pattern_mae": 0.0022338651134095225,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 5.0625,
+              "desired_attention_mass": 0.07440669698497424,
+              "achieved_attention_mass": 0.06556498531538707,
+              "pattern_mae": 0.0005304718523313148,
+              "mass_mae": 0.0137645065842662,
+              "mean_abs_logit_delta": 1.798174500465393,
+              "max_abs_logit_delta": 9.521166801452637,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 0.5625,
+              "desired_attention_mass": 0.07440669698497424,
+              "achieved_attention_mass": 0.06132886988612322,
+              "pattern_mae": 0.0005624101501710427,
+              "mass_mae": 0.01495479018194601,
+              "mean_abs_logit_delta": 2.4015040397644043,
+              "max_abs_logit_delta": 12.826004981994629,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 0.0625,
+              "desired_attention_mass": 0.07440669698497424,
+              "achieved_attention_mass": 0.06254475628240751,
+              "pattern_mae": 0.0006928074655241709,
+              "mass_mae": 0.016025491600605443,
+              "mean_abs_logit_delta": 3.4592971801757812,
+              "max_abs_logit_delta": 18.11427879333496,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 0.0,
+              "desired_attention_mass": 0.07440669698497424,
+              "achieved_attention_mass": 0.047161826147482946,
+              "pattern_mae": 0.0012188842746791823,
+              "mass_mae": 0.03491043695696415,
+              "mean_abs_logit_delta": 2.688093900680542,
+              "max_abs_logit_delta": 18.7789249420166,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 1.25,
+              "desired_attention_mass": 0.010718498844653368,
+              "achieved_attention_mass": 0.010718498844653368,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 7,
+          "task": "Implement deleteExpiredSessions() that removes sessions older than 30 days.",
+          "forced_prefix": "\n\n```typescript\n  return await",
+          "committed_token_id": 548,
+          "violating_token_id": 3239,
+          "committed_token_form": " prisma",
+          "violating_token_form": " query",
+          "committed_token_sequence": [
+            548,
+            38152
+          ],
+          "violating_token_sequence": [
+            3239
+          ],
+          "clean_sequence_tokens": 346,
+          "corrupt_sequence_tokens": 1545,
+          "rule_token_count": 29,
+          "violating_occurrences": 12,
+          "clean_margin": 10.25,
+          "corrupt_margin": 3.5,
+          "clean_rule_attention_mass": 0.06316926301671909,
+          "corrupt_rule_attention_mass": 0.007443791183714683,
+          "natural_rule_attention_drop": 0.05572547183300441,
+          "clean_corrupt_rule_pattern_mae": 0.00194455835242899,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 6.375,
+              "desired_attention_mass": 0.06316926301671909,
+              "achieved_attention_mass": 0.05676959985150741,
+              "pattern_mae": 0.00040077705223386426,
+              "mass_mae": 0.010154083302320661,
+              "mean_abs_logit_delta": 1.7509607076644897,
+              "max_abs_logit_delta": 9.928378105163574,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 3.1875,
+              "desired_attention_mass": 0.06316926301671909,
+              "achieved_attention_mass": 0.05093482222694617,
+              "pattern_mae": 0.000477674022057237,
+              "mass_mae": 0.012840396778371472,
+              "mean_abs_logit_delta": 2.439375162124634,
+              "max_abs_logit_delta": 14.314244270324707,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 1.8125,
+              "desired_attention_mass": 0.06316926301671909,
+              "achieved_attention_mass": 0.057972513139247894,
+              "pattern_mae": 0.00039317766648029926,
+              "mass_mae": 0.009247269240754226,
+              "mean_abs_logit_delta": 3.3046188354492188,
+              "max_abs_logit_delta": 17.087583541870117,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 2.3125,
+              "desired_attention_mass": 0.06316926301671909,
+              "achieved_attention_mass": 0.04106588948231477,
+              "pattern_mae": 0.0009998563481041435,
+              "mass_mae": 0.028543158388436914,
+              "mean_abs_logit_delta": 2.86323881149292,
+              "max_abs_logit_delta": 17.24660301208496,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 3.5,
+              "desired_attention_mass": 0.007443791183714683,
+              "achieved_attention_mass": 0.007443791183714683,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 8,
+          "task": "Write createOrder(data) that inserts a new order. Follow the existing code style.",
+          "forced_prefix": "\n\n```typescript\n  return await",
+          "committed_token_id": 548,
+          "violating_token_id": 3239,
+          "committed_token_form": " prisma",
+          "violating_token_form": " query",
+          "committed_token_sequence": [
+            548,
+            38152
+          ],
+          "violating_token_sequence": [
+            3239
+          ],
+          "clean_sequence_tokens": 348,
+          "corrupt_sequence_tokens": 1547,
+          "rule_token_count": 29,
+          "violating_occurrences": 12,
+          "clean_margin": 12.625,
+          "corrupt_margin": 3.0625,
+          "clean_rule_attention_mass": 0.0745142292088041,
+          "corrupt_rule_attention_mass": 0.006825801298523752,
+          "natural_rule_attention_drop": 0.06768842791028035,
+          "clean_corrupt_rule_pattern_mae": 0.0023581369762093974,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 7.5,
+              "desired_attention_mass": 0.0745142292088041,
+              "achieved_attention_mass": 0.06378362005433211,
+              "pattern_mae": 0.0006108937450335361,
+              "mass_mae": 0.016097705354555868,
+              "mean_abs_logit_delta": 2.029966115951538,
+              "max_abs_logit_delta": 9.663805961608887,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 2.0,
+              "desired_attention_mass": 0.0745142292088041,
+              "achieved_attention_mass": 0.0581971059481685,
+              "pattern_mae": 0.0006539149177954711,
+              "mass_mae": 0.01761525412215493,
+              "mean_abs_logit_delta": 2.361224889755249,
+              "max_abs_logit_delta": 13.216012954711914,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 2.125,
+              "desired_attention_mass": 0.0745142292088041,
+              "achieved_attention_mass": 0.06645093342432609,
+              "pattern_mae": 0.0004396535546570354,
+              "mass_mae": 0.010752204756359927,
+              "mean_abs_logit_delta": 3.3418500423431396,
+              "max_abs_logit_delta": 13.774250030517578,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 1.9375,
+              "desired_attention_mass": 0.0745142292088041,
+              "achieved_attention_mass": 0.044995419251231045,
+              "pattern_mae": 0.0013511805717336335,
+              "mass_mae": 0.03842563693895219,
+              "mean_abs_logit_delta": 3.2449681758880615,
+              "max_abs_logit_delta": 18.23533058166504,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 3.0625,
+              "desired_attention_mass": 0.006825801298523752,
+              "achieved_attention_mass": 0.006825801298523752,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 9,
+          "task": "Add updateUserEmail(userId, newEmail) that updates the user's email in the database.",
+          "forced_prefix": "\n\n```typescript\n  const result = await",
+          "committed_token_id": 548,
+          "violating_token_id": 3239,
+          "committed_token_form": " prisma",
+          "violating_token_form": " query",
+          "committed_token_sequence": [
+            548,
+            38152
+          ],
+          "violating_token_sequence": [
+            3239
+          ],
+          "clean_sequence_tokens": 351,
+          "corrupt_sequence_tokens": 1550,
+          "rule_token_count": 29,
+          "violating_occurrences": 12,
+          "clean_margin": 13.0,
+          "corrupt_margin": 1.0,
+          "clean_rule_attention_mass": 0.07661920284422544,
+          "corrupt_rule_attention_mass": 0.010559309184407959,
+          "natural_rule_attention_drop": 0.06605989365981747,
+          "clean_corrupt_rule_pattern_mae": 0.0023333588749385225,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 3.375,
+              "desired_attention_mass": 0.07661920284422544,
+              "achieved_attention_mass": 0.06355874226070367,
+              "pattern_mae": 0.0006206636844581226,
+              "mass_mae": 0.016571782569651708,
+              "mean_abs_logit_delta": 1.736046314239502,
+              "max_abs_logit_delta": 8.527711868286133,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 2.0,
+              "desired_attention_mass": 0.07661920284422544,
+              "achieved_attention_mass": 0.05752468581956167,
+              "pattern_mae": 0.0007285707670234842,
+              "mass_mae": 0.01977275350677351,
+              "mean_abs_logit_delta": 2.4249091148376465,
+              "max_abs_logit_delta": 14.551749229431152,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -0.6875,
+              "desired_attention_mass": 0.07661920284422544,
+              "achieved_attention_mass": 0.05838478378091867,
+              "pattern_mae": 0.0008194369807964764,
+              "mass_mae": 0.02060988432584474,
+              "mean_abs_logit_delta": 3.4038143157958984,
+              "max_abs_logit_delta": 17.56624412536621,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -0.625,
+              "desired_attention_mass": 0.07661920284422544,
+              "achieved_attention_mass": 0.051484248135238886,
+              "pattern_mae": 0.0010978951350597737,
+              "mass_mae": 0.030847956718599353,
+              "mean_abs_logit_delta": 3.3263533115386963,
+              "max_abs_logit_delta": 18.721467971801758,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 1.0,
+              "desired_attention_mass": 0.010559309184407959,
+              "achieved_attention_mass": 0.010559309184407959,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 10,
+          "task": "Add a function getUserById(id) that fetches a user record from the database. Follow existing patterns.",
+          "forced_prefix": "\n\n```typescript\n  return await",
+          "committed_token_id": 548,
+          "violating_token_id": 3239,
+          "committed_token_form": " prisma",
+          "violating_token_form": " query",
+          "committed_token_sequence": [
+            548,
+            38152
+          ],
+          "violating_token_sequence": [
+            3239
+          ],
+          "clean_sequence_tokens": 352,
+          "corrupt_sequence_tokens": 1551,
+          "rule_token_count": 29,
+          "violating_occurrences": 12,
+          "clean_margin": 11.375,
+          "corrupt_margin": 3.1875,
+          "clean_rule_attention_mass": 0.08162879313413914,
+          "corrupt_rule_attention_mass": 0.01215669962290961,
+          "natural_rule_attention_drop": 0.06947209351122953,
+          "clean_corrupt_rule_pattern_mae": 0.0024559531257881853,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 5.9375,
+              "desired_attention_mass": 0.08162879313413914,
+              "achieved_attention_mass": 0.07438000126813467,
+              "pattern_mae": 0.0006022191191732418,
+              "mass_mae": 0.014785874659607474,
+              "mean_abs_logit_delta": 1.843735933303833,
+              "max_abs_logit_delta": 9.39315128326416,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 2.8125,
+              "desired_attention_mass": 0.08162879313413914,
+              "achieved_attention_mass": 0.06772777645920332,
+              "pattern_mae": 0.0006697035874262488,
+              "mass_mae": 0.016658421518513933,
+              "mean_abs_logit_delta": 2.3497977256774902,
+              "max_abs_logit_delta": 13.60651683807373,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -0.8125,
+              "desired_attention_mass": 0.08162879313413914,
+              "achieved_attention_mass": 0.06934688054025173,
+              "pattern_mae": 0.000705991405434011,
+              "mass_mae": 0.015660595036863994,
+              "mean_abs_logit_delta": 3.2697701454162598,
+              "max_abs_logit_delta": 17.436635971069336,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 1.8125,
+              "desired_attention_mass": 0.08162879313413914,
+              "achieved_attention_mass": 0.04418945162055584,
+              "pattern_mae": 0.0015318322265766955,
+              "mass_mae": 0.04366981532523194,
+              "mean_abs_logit_delta": 3.3830559253692627,
+              "max_abs_logit_delta": 18.722732543945312,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 3.1875,
+              "desired_attention_mass": 0.01215669962290961,
+              "achieved_attention_mass": 0.01215669962290961,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 11,
+          "task": "Create findProductsByCategory(category) that queries products. Follow patterns.",
+          "forced_prefix": "\n\n```typescript\n  const result = await",
+          "committed_token_id": 548,
+          "violating_token_id": 3239,
+          "committed_token_form": " prisma",
+          "violating_token_form": " query",
+          "committed_token_sequence": [
+            548,
+            38152
+          ],
+          "violating_token_sequence": [
+            3239
+          ],
+          "clean_sequence_tokens": 347,
+          "corrupt_sequence_tokens": 1546,
+          "rule_token_count": 29,
+          "violating_occurrences": 12,
+          "clean_margin": 9.75,
+          "corrupt_margin": 0.375,
+          "clean_rule_attention_mass": 0.07113437648289479,
+          "corrupt_rule_attention_mass": 0.014253290871588083,
+          "natural_rule_attention_drop": 0.05688108561130671,
+          "clean_corrupt_rule_pattern_mae": 0.002012629239918449,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 3.25,
+              "desired_attention_mass": 0.07113437648289479,
+              "achieved_attention_mass": 0.06295589028069606,
+              "pattern_mae": 0.0005273944794820496,
+              "mass_mae": 0.013785717526423888,
+              "mean_abs_logit_delta": 1.5514638423919678,
+              "max_abs_logit_delta": 8.187093734741211,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 1.0,
+              "desired_attention_mass": 0.07113437648289479,
+              "achieved_attention_mass": 0.05923885844934445,
+              "pattern_mae": 0.0005237137369336919,
+              "mass_mae": 0.013723082972529273,
+              "mean_abs_logit_delta": 2.421724319458008,
+              "max_abs_logit_delta": 14.226391792297363,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 2.125,
+              "desired_attention_mass": 0.07113437648289479,
+              "achieved_attention_mass": 0.06797644603424348,
+              "pattern_mae": 0.0004684218762961861,
+              "mass_mae": 0.008644806059937064,
+              "mean_abs_logit_delta": 3.4491469860076904,
+              "max_abs_logit_delta": 15.752436637878418,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -0.875,
+              "desired_attention_mass": 0.07113437648289479,
+              "achieved_attention_mass": 0.055294664863210455,
+              "pattern_mae": 0.000876602402478546,
+              "mass_mae": 0.023854468465567782,
+              "mean_abs_logit_delta": 2.8876218795776367,
+              "max_abs_logit_delta": 18.7432804107666,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 0.375,
+              "desired_attention_mass": 0.014253290871588083,
+              "achieved_attention_mass": 0.014253290871588083,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 12,
+          "task": "Write createOrder(data) that inserts a new order. Follow the existing code style.",
+          "forced_prefix": "\n\n```typescript\n  const result = await",
+          "committed_token_id": 548,
+          "violating_token_id": 3239,
+          "committed_token_form": " prisma",
+          "violating_token_form": " query",
+          "committed_token_sequence": [
+            548,
+            38152
+          ],
+          "violating_token_sequence": [
+            3239
+          ],
+          "clean_sequence_tokens": 350,
+          "corrupt_sequence_tokens": 1549,
+          "rule_token_count": 29,
+          "violating_occurrences": 12,
+          "clean_margin": 12.8125,
+          "corrupt_margin": -0.6875,
+          "clean_rule_attention_mass": 0.08043382796817101,
+          "corrupt_rule_attention_mass": 0.007623502823452537,
+          "natural_rule_attention_drop": 0.07281032514471848,
+          "clean_corrupt_rule_pattern_mae": 0.0025358727434650064,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 3.9375,
+              "desired_attention_mass": 0.08043382796817101,
+              "achieved_attention_mass": 0.06958570109250453,
+              "pattern_mae": 0.0007258679762834128,
+              "mass_mae": 0.01835192153857161,
+              "mean_abs_logit_delta": 1.977174997329712,
+              "max_abs_logit_delta": 9.225504875183105,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 0.125,
+              "desired_attention_mass": 0.08043382796817101,
+              "achieved_attention_mass": 0.06089469926575056,
+              "pattern_mae": 0.0007743433349018092,
+              "mass_mae": 0.02088279654764427,
+              "mean_abs_logit_delta": 2.45227313041687,
+              "max_abs_logit_delta": 13.748994827270508,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": -1.0,
+              "desired_attention_mass": 0.08043382796817101,
+              "achieved_attention_mass": 0.06416644062846899,
+              "pattern_mae": 0.0008306470050369031,
+              "mass_mae": 0.022043286370507512,
+              "mean_abs_logit_delta": 3.6968331336975098,
+              "max_abs_logit_delta": 18.02163314819336,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": -1.375,
+              "desired_attention_mass": 0.08043382796817101,
+              "achieved_attention_mass": 0.054135676115178145,
+              "pattern_mae": 0.0012889930087392433,
+              "mass_mae": 0.034765420273358286,
+              "mean_abs_logit_delta": 3.2729549407958984,
+              "max_abs_logit_delta": 18.668712615966797,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": -0.6875,
+              "desired_attention_mass": 0.007623502823452537,
+              "achieved_attention_mass": 0.007623502823452537,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 13,
+          "task": "Add updateUserEmail(userId, newEmail) that updates the user's email in the database.",
+          "forced_prefix": "\n\n```typescript\n  const data = await",
+          "committed_token_id": 548,
+          "violating_token_id": 3239,
+          "committed_token_form": " prisma",
+          "violating_token_form": " query",
+          "committed_token_sequence": [
+            548,
+            38152
+          ],
+          "violating_token_sequence": [
+            3239
+          ],
+          "clean_sequence_tokens": 351,
+          "corrupt_sequence_tokens": 1550,
+          "rule_token_count": 29,
+          "violating_occurrences": 12,
+          "clean_margin": 13.0,
+          "corrupt_margin": 3.1875,
+          "clean_rule_attention_mass": 0.0765677561553625,
+          "corrupt_rule_attention_mass": 0.010294374159107415,
+          "natural_rule_attention_drop": 0.06627338199625508,
+          "clean_corrupt_rule_pattern_mae": 0.0023426123975346293,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 4.5,
+              "desired_attention_mass": 0.0765677561553625,
+              "achieved_attention_mass": 0.0703006716301808,
+              "pattern_mae": 0.0006838599358441291,
+              "mass_mae": 0.01650282649699455,
+              "mean_abs_logit_delta": 1.8990176916122437,
+              "max_abs_logit_delta": 8.525135040283203,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 4.125,
+              "desired_attention_mass": 0.0765677561553625,
+              "achieved_attention_mass": 0.06313698545384866,
+              "pattern_mae": 0.000561026900658572,
+              "mass_mae": 0.014072958869152129,
+              "mean_abs_logit_delta": 2.3831028938293457,
+              "max_abs_logit_delta": 13.4110107421875,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 2.6875,
+              "desired_attention_mass": 0.0765677561553625,
+              "achieved_attention_mass": 0.06282453009715447,
+              "pattern_mae": 0.0006720324356417853,
+              "mass_mae": 0.015990092349686444,
+              "mean_abs_logit_delta": 2.994485855102539,
+              "max_abs_logit_delta": 14.934858322143555,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 3.125,
+              "desired_attention_mass": 0.0765677561553625,
+              "achieved_attention_mass": 0.052855647527254544,
+              "pattern_mae": 0.0011514199616683002,
+              "mass_mae": 0.031203733219836768,
+              "mean_abs_logit_delta": 3.340567111968994,
+              "max_abs_logit_delta": 18.319873809814453,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 3.1875,
+              "desired_attention_mass": 0.010294374159107415,
+              "achieved_attention_mass": 0.010294374159107415,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        },
+        {
+          "index": 14,
+          "task": "Add a function getUserById(id) that fetches a user record from the database. Follow existing patterns.",
+          "forced_prefix": "\n\n```typescript\n  const data = await",
+          "committed_token_id": 548,
+          "violating_token_id": 3239,
+          "committed_token_form": " prisma",
+          "violating_token_form": " query",
+          "committed_token_sequence": [
+            548,
+            38152
+          ],
+          "violating_token_sequence": [
+            3239
+          ],
+          "clean_sequence_tokens": 354,
+          "corrupt_sequence_tokens": 1553,
+          "rule_token_count": 29,
+          "violating_occurrences": 12,
+          "clean_margin": 11.0,
+          "corrupt_margin": 2.75,
+          "clean_rule_attention_mass": 0.07941954052792145,
+          "corrupt_rule_attention_mass": 0.010301964335107746,
+          "natural_rule_attention_drop": 0.06911757619281371,
+          "clean_corrupt_rule_pattern_mae": 0.002438632107581585,
+          "eligible": true,
+          "conditions": {
+            "constraint_restore": {
+              "margin": 4.5625,
+              "desired_attention_mass": 0.07941954052792145,
+              "achieved_attention_mass": 0.07680423292689599,
+              "pattern_mae": 0.0007393363731143137,
+              "mass_mae": 0.01754081470426172,
+              "mean_abs_logit_delta": 2.0424628257751465,
+              "max_abs_logit_delta": 10.700851440429688,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_violation_restore": {
+              "margin": 2.3125,
+              "desired_attention_mass": 0.07941954052792145,
+              "achieved_attention_mass": 0.06948260167756906,
+              "pattern_mae": 0.0005954720851989875,
+              "mass_mae": 0.0125116194237937,
+              "mean_abs_logit_delta": 2.3253977298736572,
+              "max_abs_logit_delta": 13.205734252929688,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_random_restore": {
+              "margin": 1.6875,
+              "desired_attention_mass": 0.07941954052792145,
+              "achieved_attention_mass": 0.07094842675500192,
+              "pattern_mae": 0.0009267017286709653,
+              "mass_mae": 0.021594665036760628,
+              "mean_abs_logit_delta": 3.6144213676452637,
+              "max_abs_logit_delta": 15.964884757995605,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "rag_recent_restore": {
+              "margin": 1.0625,
+              "desired_attention_mass": 0.07941954052792145,
+              "achieved_attention_mass": 0.046204496103410535,
+              "pattern_mae": 0.0014162873212626437,
+              "mass_mae": 0.038651103420236796,
+              "mean_abs_logit_delta": 3.5817553997039795,
+              "max_abs_logit_delta": 18.799226760864258,
+              "calibration_steps": 1,
+              "converged": true
+            },
+            "constraint_identity": {
+              "margin": 2.75,
+              "desired_attention_mass": 0.010301964335107746,
+              "achieved_attention_mass": 0.010301964335107746,
+              "pattern_mae": 0.0,
+              "mass_mae": 0.0,
+              "mean_abs_logit_delta": 0.0,
+              "max_abs_logit_delta": 0.0,
+              "calibration_steps": 1,
+              "converged": true
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

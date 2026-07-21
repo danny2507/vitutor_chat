@@ -42,7 +42,7 @@ class ViTutorProxyHandler(http.server.SimpleHTTPRequestHandler):
             endpoint = req_body.get('endpoint', 'https://ws.gvlab.org/fablab/ura/llama/haystack/')
             model = req_body.get('model', 'vitutor-qwen3-8b-full-sft-dpo-grpo')
             messages = req_body.get('messages', [])
-            temperature = req_body.get('temperature', 0.6)
+            temperature = req_body.get('temperature', 0.0)
             max_tokens = req_body.get('max_tokens', 2048)
             stream = req_body.get('stream', True)
             api_key = req_body.get('apiKey', '')

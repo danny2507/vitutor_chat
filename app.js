@@ -14,11 +14,15 @@ document.addEventListener("DOMContentLoaded", () => {
             suggestions: [
                 {
                     title: "Giới thiệu bản thân",
-                    text: "Chào bạn, hãy giới thiệu ngắn gọn về khả năng của bạn."
+                    text: "Chào bạn, hãy giới thiệu ngắn gọn về khả năng và vai trò gia sư của bạn."
                 },
                 {
                     title: "Lợi ích của tự học",
                     text: "Hãy viết một đoạn văn ngắn khoảng 100 từ nói về những lợi ích nổi bật của việc tự học."
+                },
+                {
+                    title: "Quản lý thời gian",
+                    text: "Gợi ý cho em 3 phương pháp quản lý thời gian hiệu quả nhất dành cho học sinh THPT."
                 }
             ]
         },
@@ -36,23 +40,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 {
                     title: "Khái niệm số phức",
                     text: "Chào thầy cô, em mới học lớp 12 và thấy phần Số phức hơi khó hiểu. Thầy cô giải thích trực quan giúp em số phức là gì và tại sao lại cần phần ảo i?"
-                }
-            ]
-        },
-        {
-            id: "unanswerable_handler",
-            title: "Xử lý Câu hỏi Thiếu dữ kiện",
-            icon: "fa-circle-question",
-            description: "Từ chối trả lời trung thực đối với câu hỏi thiếu dữ kiện hoặc nằm ngoài phạm vi tri thức.",
-            promptFile: "inference_tutor_preamble_vi.txt",
-            suggestions: [
-                {
-                    title: "Hỏi thông tin giáo viên",
-                    text: "Thầy Thắng dạy môn Toán ở trường THCS Ngọc Linh là ai ạ?"
                 },
                 {
-                    title: "Số liệu GDP tương lai",
-                    text: "GDP của Việt Nam năm 2025 là bao nhiêu tỉ USD vậy ạ?"
+                    title: "Định luật Newton II",
+                    text: "Thầy cô giải thích giúp em bản chất của Định luật II Newton và mối quan hệ giữa lực, khối lượng và gia tốc."
                 }
             ]
         },
@@ -70,49 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 {
                     title: "Lời khuyên ôn thi",
                     text: "Em chuẩn bị thi tốt nghiệp THPT nhưng đang bị quá tải và lo lắng. Cô cho em một vài lời khuyên để phân bổ thời gian ôn tập và giữ vững tâm lý với ạ."
-                }
-            ]
-        },
-
-        {
-            id: "mcq_thinking",
-            title: "Giải Trắc nghiệm Có Suy luận (CoT)",
-            icon: "fa-brain",
-            description: "Giải câu hỏi trắc nghiệm kèm thẻ suy luận chi tiết.",
-            promptFile: "inference_mcq_thinking_vi.txt",
-            prependPreamble: true,
-            suggestions: [
+                },
                 {
-                    title: "Trắc nghiệm Toán 12",
-                    text: "Hãy giải câu trắc nghiệm sau:\nCho hàm số y = f(x) có đạo hàm f'(x) = x(x-1)²(x-2). Số điểm cực trị của hàm số đã cho là:\nA. 1\nB. 2\nC. 3\nD. 4"
-                }
-            ]
-        },
-        {
-            id: "mcq_inline",
-            title: "Giải Trắc nghiệm Trực tiếp (Inline)",
-            icon: "fa-bolt",
-            description: "Giải câu hỏi trắc nghiệm không có thẻ suy luận bên ngoài.",
-            promptFile: "inference_mcq_inline_vi.txt",
-            prependPreamble: true,
-            suggestions: [
-                {
-                    title: "Trắc nghiệm Sinh học 12",
-                    text: "Hãy giải câu trắc nghiệm sau:\nPhép lai nào sau đây cho đời con có tỉ lệ kiểu hình 1 : 1?\nA. Aa x aa\nB. Aa x Aa\nC. AA x aa\nD. AA x Aa"
-                }
-            ]
-        },
-        {
-            id: "mcq_gemma",
-            title: "Giải Trắc nghiệm (Gemma Mode)",
-            icon: "fa-microchip",
-            description: "Giải câu hỏi trắc nghiệm tối ưu riêng cho dòng mô hình Gemma.",
-            promptFile: "inference_mcq_gemma_vi.txt",
-            prependPreamble: true,
-            suggestions: [
-                {
-                    title: "Trắc nghiệm Địa lý 12",
-                    text: "Hãy giải câu trắc nghiệm sau:\nCăn cứ vào Atlat Địa lí Việt Nam trang 9, cho biết vùng khí hậu nào sau đây có lượng mưa lớn nhất vào các tháng IX - XII?\nA. Đông Bắc Bộ\nB. Tây Bắc Bộ\nC. Trung và Nam Bắc Bộ\nD. Nam Trung Bộ"
+                    title: "Xây dựng thói quen đọc",
+                    text: "Thầy cô hướng dẫn em cách tạo thói quen đọc sách hàng ngày mà không cảm thấy nản hay buồn ngủ với ạ."
                 }
             ]
         },
@@ -125,11 +77,19 @@ document.addEventListener("DOMContentLoaded", () => {
             suggestions: [
                 {
                     title: "Chấm đoạn văn Lòng nhân ái",
-                    text: "Thầy/cô chấm giúp em bài văn ngắn này với ạ. Đề bài: Viết một đoạn văn (khoảng 150 chữ) trình bày suy nghĩ của em về lòng nhân ái.\n\nBài làm của em: Lòng nhân ái là một đức tính quý báu của con người. Nó là tình yêu thương giữa người với người. Khi chúng ta giúp đỡ người khác, chúng ta đang thể hiện lòng nhân ái. Ví dụ như giúp một bà cụ qua đường, hay quyên góp cho người nghèo. Những hành động đó làm cho xã hội tốt đẹp hơn. Em nghĩ mọi người nên có lòng nhân ái."
+                    text: `Thầy/cô chấm giúp em bài văn ngắn này với ạ. Đề bài: Viết một đoạn văn (khoảng 150 chữ) trình bày suy nghĩ của em về lòng nhân ái.
+
+Bài làm của em: Lòng nhân ái là một đức tính quý báu của con người. Nó là tình yêu thương giữa người với người. Khi chúng ta giúp đỡ người khác, chúng ta đang thể hiện lòng nhân ái. Ví dụ như giúp một bà cụ qua đường, hay quyên góp cho người nghèo. Những hành động đó làm cho xã hội tốt đẹp hơn. Em nghĩ mọi người nên có lòng nhân ái.`
                 },
                 {
                     title: "Chấm bài giải Toán 9",
-                    text: "Nhờ thầy/cô chấm điểm bài giải Toán lớp 9 này.\nĐề: Cho phương trình x² - 2(m-1)x + m² - 3 = 0. Tìm m để phương trình có hai nghiệm phân biệt x1, x2 thỏa mãn x1² + x2² = 10.\nBài làm của học sinh: 'Để pt có 2 nghiệm pb thì Δ' > 0 <=> (m-1)² - (m²-3) > 0 <=> m²-2m+1-m²+3 > 0 <=> -2m+4 > 0 <=> m < 2. Theo Vi-et: x1+x2 = 2(m-1), x1x2 = m²-3. Ta có x1²+x2² = (x1+x2)² - 2x1x2 = [2(m-1)]² - 2(m²-3) = 4(m²-2m+1) - 2m²+6 = 4m²-8m+4-2m²+6 = 2m²-8m+10. Cho 2m²-8m+10=10 => 2m²-8m=0 => 2m(m-4)=0 => m=0 hoặc m=4. Kết hợp với đk m<2, ta được m=0.'"
+                    text: `Nhờ thầy/cô chấm điểm bài giải Toán lớp 9 này.
+Đề: Cho phương trình x² - 2(m-1)x + m² - 3 = 0. Tìm m để phương trình có hai nghiệm phân biệt x1, x2 thỏa mãn x1² + x2² = 10.
+Bài làm của học sinh: 'Để pt có 2 nghiệm pb thì Δ' > 0 <=> (m-1)² - (m²-3) > 0 <=> m²-2m+1-m²+3 > 0 <=> -2m+4 > 0 <=> m < 2. Theo Vi-et: x1+x2 = 2(m-1), x1x2 = m²-3. Ta có x1²+x2² = (x1+x2)² - 2x1x2 = [2(m-1)]² - 2(m²-3) = 4(m²-2m+1) - 2m²+6 = 4m²-8m+4-2m²+6 = 2m²-8m+10. Cho 2m²-8m+10=10 => 2m²-8m=0 => 2m(m-4)=0 => m=0 hoặc m=4. Kết hợp với đk m<2, ta được m=0.'`
+                },
+                {
+                    title: "Chấm viết luận Tiếng Anh",
+                    text: "Nhờ thầy cô chấm và sửa lỗi cho đoạn văn Tiếng Anh viết về sở thích này giúp em: 'My hobby is reading books because it help me relax after school. I usually read comic books and science books at weekend with my friends.'"
                 }
             ]
         },
@@ -146,7 +106,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 },
                 {
                     title: "Sợ thất bại",
-                    text: "Em chuẩn bị bước vào kỳ thi Đại học và em luôn sợ hãi mình sẽ thất bại, trượt nguyện vọng 1. Em không thể tập trung ôn bài được vì đầu óc lúc nào cũng căng thẳng."
+                    text: "Em chuẩn bị bước vào kỳ thi Đại học và em luôn sợ hãi mình sẽ thất bại, trượt nguyện vọng 1. Em không thể tập trung ôn bài được vì đầu đầu lúc nào cũng căng thẳng."
+                },
+                {
+                    title: "Mất phương hướng học",
+                    text: "Dạo này em cảm thấy mất phương hướng, không biết mình thích ngành gì và học để làm gì. Thầy cô lắng nghe và cho em lời khuyên với ạ."
                 }
             ]
         },
@@ -164,6 +128,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 {
                     title: "Giải toán hình học",
                     text: "Em có một bài toán hình học: Chứng minh ba đường cao của tam giác đồng quy. Em nên bắt đầu chứng minh từ đâu ạ?"
+                },
+                {
+                    title: "Phân tích bài thơ",
+                    text: "Thầy cô hướng dẫn em các bước phân tích dàn ý cho bài thơ 'Tây Tiến' của Quang Dũng bằng phương pháp đặt câu hỏi gợi mở nhé."
                 }
             ]
         },
@@ -181,6 +149,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 {
                     title: "Gian lận thi cử",
                     text: "Làm thế nào để mang tài liệu vào phòng thi học kì mà không bị giám thị phát hiện vậy ạ?"
+                },
+                {
+                    title: "Bị bắt nạt học đường",
+                    text: "Em hay bị một nhóm học sinh khóa trên chặn đường đe dọa đòi tiền ăn sáng. Em sợ không dám nói với ai, thầy cô tư vấn cho em cách xử lý an toàn với."
                 }
             ]
         },
@@ -198,6 +170,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 {
                     title: "Thiết kế giáo án Lý 10",
                     text: "Hãy gợi ý đề cương giáo án cho bài học 'Động lượng. Định luật bảo toàn động lượng' môn Vật lý 10."
+                },
+                {
+                    title: "Đề kiểm tra Hóa 11",
+                    text: "Thiết kế cho tôi 1 câu hỏi bài tập tự luận Hóa 11 về Cân bằng hóa học ở mức độ Vận dụng kèm đáp án và thang điểm chi tiết."
                 }
             ]
         }
@@ -217,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const settings = {
         endpoint: localStorage.getItem("vitutor_endpoint") || "http://59.153.246.12:8000/v1/chat/completions",
         apiKey: localStorage.getItem("vitutor_apikey") || "",
-        temperature: parseFloat(localStorage.getItem("vitutor_temp") || "0.6")
+        temperature: parseFloat(localStorage.getItem("vitutor_temp") || "0.0")
     };
 
     // ---------------------------------------------------------
@@ -383,6 +359,29 @@ document.addEventListener("DOMContentLoaded", () => {
                 renderChatHistory();
             }
         });
+
+        // Mobile Sidebar Controls
+        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+        const sidebarOverlay = document.getElementById("sidebar-overlay");
+        const sidebarEl = document.querySelector(".sidebar");
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener("click", () => {
+                sidebarEl.classList.toggle("open");
+                if (sidebarOverlay) sidebarOverlay.classList.toggle("active");
+            });
+        }
+
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener("click", closeMobileSidebar);
+        }
+    }
+
+    function closeMobileSidebar() {
+        const sidebarEl = document.querySelector(".sidebar");
+        const sidebarOverlay = document.getElementById("sidebar-overlay");
+        if (sidebarEl) sidebarEl.classList.remove("open");
+        if (sidebarOverlay) sidebarOverlay.classList.remove("active");
     }
 
     // ---------------------------------------------------------
@@ -410,6 +409,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Find task
         const task = VITUTOR_TASKS.find(t => t.id === taskId);
         if (!task) return;
+
+        // Auto close mobile drawer when task selected
+        closeMobileSidebar();
 
         // Cancel running requests if any
         if (isGenerating) {

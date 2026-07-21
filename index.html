@@ -76,6 +76,9 @@
         <!-- MAIN CHAT AREA -->
         <main class="chat-area">
             <header class="chat-header">
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Mở thanh bên">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
                 <div class="chat-header-info">
                     <h2 class="chat-header-title" id="chat-title">Chọn một Task để bắt đầu</h2>
                     <span class="chat-header-subtitle" id="chat-subtitle">Mô hình: vitutor-qwen3-8b-full-sft-dpo-grpo</span>
@@ -116,6 +119,8 @@
                 </div>
             </div>
         </main>
+        <!-- Mobile Sidebar Backdrop Overlay -->
+        <div id="sidebar-overlay" class="sidebar-overlay"></div>
     </div>
 
     <!-- SETTINGS MODAL -->
@@ -137,10 +142,10 @@
                 </div>
                 <div class="control-group">
                     <label class="control-label" for="settings-temp">Nhiệt độ (Temperature)</label>
-                    <input type="range" id="settings-temp" min="0" max="1" step="0.1" value="0.6" style="width: 100%; accent-color: var(--bk-blue-primary);">
+                    <input type="range" id="settings-temp" min="0" max="1" step="0.1" value="0.0" style="width: 100%; accent-color: var(--bk-blue-primary);">
                     <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary);">
                         <span>Sáng tạo hơn (1.0)</span>
-                        <span id="temp-val-display" style="font-weight: bold; color: var(--bk-blue-light);">0.6</span>
+                        <span id="temp-val-display" style="font-weight: bold; color: var(--bk-blue-light);">0.0</span>
                         <span>Chính xác hơn (0.0)</span>
                     </div>
                 </div>
